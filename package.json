@@ -1,6 +1,6 @@
 {
   "name": "tsc-watch",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "The TypeScirpt compiler with onSuccess command",
   "main": "tsc-watch.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "homepage": "https://github.com/gilamran/tsc-watch#readme",
   "dependencies": {
     "chalk": "^1.1.3",
-    "cross-spawn": "^5.1.0"
+    "cross-spawn": "^5.1.0",
+    "typescript": "*"
   }
 }
