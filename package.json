@@ -1,0 +1,22 @@
+{
+  "name": "tscw",
+  "version": "1.0.0",
+  "description": "The TypeScirpt compiler with onSuccess command",
+  "main": "tscw.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gilamran/tscw.git"
+  },
+  "keywords": [
+    "TypeScript"
+  ],
+  "author": "Gil Amran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gilamran/tscw/issues"
+  },
+  "homepage": "https://github.com/gilamran/tscw#readme"
+}
