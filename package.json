@@ -1,14 +1,14 @@
 {
-  "name": "tscw",
+  "name": "tsc-watch",
   "version": "1.0.0",
   "description": "The TypeScirpt compiler with onSuccess command",
-  "main": "tscw.js",
+  "main": "tsc-watch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/gilamran/tscw.git"
+    "url": "git+ssh://git@github.com/gilamran/tsc-watch.git"
   },
   "keywords": [
     "TypeScript"
@@ -16,7 +16,7 @@
   "author": "Gil Amran",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gilamran/tscw/issues"
+    "url": "https://github.com/gilamran/tsc-watch/issues"
   },
-  "homepage": "https://github.com/gilamran/tscw#readme"
+  "homepage": "https://github.com/gilamran/tsc-watch#readme"
 }
