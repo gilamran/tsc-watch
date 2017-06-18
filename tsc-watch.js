@@ -53,8 +53,10 @@ function getCommandIdx(inputArgs, command) {
 }
 
 function runCommand(fullCommand) {
-  const parts = fullCommand.split(' ').filter(a => a.length > 0);
-  return spawn(parts[0], parts.slice(1), {stdio: 'inherit'})
+  if (fullCommand) {
+    const parts = fullCommand.split(' ').filter(a => a.length > 0);
+    return spawn(parts[0], parts.slice(1), {stdio: 'inherit'})
+  }
 }
 
 function killAllProcesses() {
