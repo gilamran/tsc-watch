@@ -3,8 +3,7 @@
 
 const chalk = require('chalk');
 const spawn = require('cross-spawn');
-const psTree = require('ps-tree');
-const { exec } = require('child_process');
+const kill = require('./kill')
 
 const compilationStartedRegex = /Starting incremental compilation/;
 const compilationCompleteRegex = / Compilation complete\. Watching for file changes\./;
@@ -19,17 +18,6 @@ let hadErrors = false;
 let firstTime = true;
 let firstSuccessProcess = null;
 let successProcess = null;
-let killSignal = 'SIGUSR2';
-let hasPS = true;
-
-const isWindows = process.platform === 'win32';
-
-// discover if the OS has `ps`, and therefore can use psTree
-exec('ps', function (error) {
-  if (error) {
-    hasPS = false;
-  }
-});
 
 function color(line) {
   if (typescriptErrorRegex.test(line)) {
@@ -76,40 +64,18 @@ function killAllProcesses() {
   const promises = [];
   const childProcesses = []
   if (firstSuccessProcess) {
-    promises.push(kill(firstSuccessProcess, killSignal).then(() => {
+    promises.push(kill(firstSuccessProcess).then(() => {
       firstSuccessProcess = null;
     }));
   }
 
   if (successProcess) {
-    promises.push(kill(successProcess, killSignal).then(() => {
+    promises.push(kill(successProcess).then(() => {
       successProcess = null;
     }));
   }
 
   return Promise.all(promises);
-}
-
-function kill(child, signal) {
-  return new Promise((resolve, reject) => {
-    if (isWindows) {
-      exec('taskkill /pid ' + child.pid + ' /T /F');
-      resolve();
-    } else {
-      if (hasPS) {
-        psTree(child.pid, function (err, kids) {
-          spawn('kill', ['-s', signal, child.pid].concat(kids.map(function (p) {
-            return p.PID;
-          }))).on('close', resolve);
-        });
-      } else {
-        exec('kill -s ' + signal + ' ' + child.pid, function () {
-          // ignore if the process has been killed already
-          resolve();
-        });
-      }
-    }
-  });
 }
 
 let allArgs = process.argv;
@@ -166,8 +132,7 @@ tscProcess.stdout.on('data', buffer => {
         } else {
           successProcess = runCommand(onSuccessCommand);
         }
-      });
-      
+      });   
     }
   }
 });
