@@ -1,6 +1,6 @@
 {
   "name": "tsc-watch",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "The TypeScirpt compiler with onSuccess command",
   "main": "tsc-watch.js",
   "scripts": {
