@@ -124,7 +124,7 @@ tscProcess.stdout.on('data', buffer => {
         if (firstTime && onFirstSuccessCommand) {
           firstTime = false;
           firstSuccessProcess = runCommand(onFirstSuccessCommand);
-        } else {
+        } else if (onSuccessCommand) {
           successProcess = runCommand(onSuccessCommand);
         }
       });
