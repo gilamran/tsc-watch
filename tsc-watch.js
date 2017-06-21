@@ -3,6 +3,7 @@
 
 const chalk = require('chalk');
 const spawn = require('cross-spawn');
+const kill = require('./kill')
 
 const compilationStartedRegex = /Starting incremental compilation/;
 const compilationCompleteRegex = / Compilation complete\. Watching for file changes\./;
@@ -60,16 +61,23 @@ function runCommand(fullCommand) {
 }
 
 function killAllProcesses() {
+  const promises = [];
+  const childProcesses = []
   if (firstSuccessProcess) {
-    firstSuccessProcess.kill();
-    firstSuccessProcess = null;
+    promises.push(kill(firstSuccessProcess).then(() => {
+      firstSuccessProcess = null;
+    }));
   }
 
   if (successProcess) {
-    successProcess.kill();
-    successProcess = null;
+    promises.push(kill(successProcess).then(() => {
+      successProcess = null;
+    }));
   }
+
+  return Promise.all(promises);
 }
+
 let allArgs = process.argv;
 // onSuccess
 let onSuccessCommandIdx = getCommandIdx(allArgs, '--onSuccess');
@@ -117,13 +125,14 @@ tscProcess.stdout.on('data', buffer => {
     if (hadErrors) {
       console.log('Had errors, not spawning');
     } else {
-      killAllProcesses();
-      if (firstTime && onFirstSuccessCommand) {
-        firstTime = false;
-        firstSuccessProcess = runCommand(onFirstSuccessCommand);
-      } else {
-        successProcess = runCommand(onSuccessCommand);
-      }
+      killAllProcesses().then(() => {
+        if (firstTime && onFirstSuccessCommand) {
+          firstTime = false;
+          firstSuccessProcess = runCommand(onFirstSuccessCommand);
+        } else {
+          successProcess = runCommand(onSuccessCommand);
+        }
+      });   
     }
   }
 });
