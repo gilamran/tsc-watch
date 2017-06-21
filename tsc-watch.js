@@ -17,7 +17,9 @@ const newAdditionToSyntax = ['Watch input files. [always on]', onSuccessCommandS
 let hadErrors = false;
 let firstTime = true;
 let firstSuccessProcess = null;
+let firstSuccessProcessExited = null;
 let successProcess = null;
+let successProcessExited = null;
 
 function color(line) {
   if (typescriptErrorRegex.test(line)) {
@@ -64,10 +66,12 @@ function killAllProcesses() {
   const promises = [];
   if (firstSuccessProcess) {
     promises.push(killer(firstSuccessProcess).then(() => firstSuccessProcess = null));
+    promises.push(firstSuccessProcessExited.then(() => firstSuccessProcessExited = null));
   }
 
   if (successProcess) {
     promises.push(killer(successProcess).then(() => successProcess = null));
+    promises.push(successProcessExited.then(() => successProcessExited = null));
   }
 
   return Promise.all(promises);
@@ -124,8 +128,18 @@ tscProcess.stdout.on('data', buffer => {
         if (firstTime && onFirstSuccessCommand) {
           firstTime = false;
           firstSuccessProcess = runCommand(onFirstSuccessCommand);
+          firstSuccessProcessExited = new Promise(resolve => {
+            firstSuccessProcess.on('exit', code => {
+              resolve(code);
+            });
+          });
         } else if (onSuccessCommand) {
           successProcess = runCommand(onSuccessCommand);
+          successProcessExited = new Promise(resolve => {
+            successProcess.on('exit', code => {
+              resolve(code);
+            });
+          });
         }
       });
     }
