@@ -1,13 +1,12 @@
 {
   "name": "tsc-watch",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "The TypeScript compiler with onSuccess command",
-  "main": "tsc-watch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "tsc-watch": "./tsc-watch.js"
+    "tsc-watch": "./index.js"
   },
   "repository": {
     "type": "git",
