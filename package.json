@@ -1,7 +1,7 @@
 {
   "name": "tsc-watch",
   "version": "1.0.8",
-  "description": "The TypeScirpt compiler with onSuccess command",
+  "description": "The TypeScript compiler with onSuccess command",
   "main": "tsc-watch.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
