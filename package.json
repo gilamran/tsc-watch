@@ -3,7 +3,7 @@
   "version": "1.0.10",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "bin": {
     "tsc-watch": "./index.js"
@@ -26,5 +26,9 @@
     "cross-spawn": "^5.1.0",
     "ps-tree": "^1.1.0",
     "typescript": "*"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
   }
 }
