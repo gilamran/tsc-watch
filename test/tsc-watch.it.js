@@ -24,7 +24,7 @@ describe('TSC-Watch child process messages', () => {
       driver
         .subscribe('subsequent_success', this.listener)
         .startWatch()
-        .modifyAndSucceedAfter(1000)
+        .modifyAndSucceedAfter(2000)
         .modifyAndSucceedAfter(1000)
 
         return eventually(() =>
@@ -35,7 +35,7 @@ describe('TSC-Watch child process messages', () => {
       driver
         .subscribe('compile_errors', this.listener)
         .startWatch({ failFirst: true })
-        .modifyAndFailAfter(500);
+        .modifyAndFailAfter(1500);
 
         return eventually(() =>
           expect(this.listener.callCount).to.be.equal(2));

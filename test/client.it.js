@@ -25,7 +25,7 @@ describe('Client Events', () => {
     it('Should fire "subsequent_success" on subsequent successes', () => {
       tscWatchClient.on('subsequent_success', this.callback);
       tscWatchClient.start('--out', './tmp/output.js', './tmp/fixtures/passing.ts');
-      tscWatchDriver.modifyAndSucceedAfter(500);
+      tscWatchDriver.modifyAndSucceedAfter(1500);
 
       return eventually(() => expect(this.callback.calledOnce).to.be.true);
     });

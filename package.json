@@ -3,7 +3,7 @@
   "version": "1.0.10",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
-    "test": "mocha 'test/**/*.js'"
+    "test": "mocha test/**/*.js"
   },
   "bin": {
     "tsc-watch": "./index.js"
