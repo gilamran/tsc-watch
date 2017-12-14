@@ -46,21 +46,17 @@ describe('TSC-Watch child process messages', () => {
 const driver = {
   noop: () => {},
   wait: Promise.resolve(),
+  successFilePath: './tmp/fixtures/passing.ts',
+  failFilePath: './tmp/fixtures/failing.ts',
+  successSuffix: '   ',
+  failSuffix: '{{{',
   subscribe: (processEventName, listener) => {
     subscriptions.set(processEventName, listener);
     return driver;
   },
 
-  clearSubscriptions: () => {
-    subscriptions.clear();
-    return driver;
-  },
-
   startWatch: ({failFirst} = {}) => {
-    driver.subProcArgs = failFirst ? childProcessArguments.fail() : childProcessArguments.succeed();
-    driver.currentSourcePath = driver.subProcArgs.slice(-1)[0];
-
-    driver.proc = fork('./lib/tsc-watch.js', driver.subProcArgs, { stdio: 'inherit' });
+    driver.proc = fork('./lib/tsc-watch.js', ['--out', './tmp/output.js', failFirst ? driver.failFilePath : driver.successFilePath], { stdio: 'inherit' });
 
     subscriptions.forEach((handler, evName) =>
       driver.proc.on('message', event => evName === event
@@ -70,37 +66,28 @@ const driver = {
     return driver;
   },
 
-  modifyAndSucceedAfter: (wait = 0) => {
-    driver._extendWait(wait).then(() => fs.appendFileSync(driver.currentSourcePath, '   '));
+  modifyAndSucceedAfter: (wait = 0, isFailingPath) => {
+    driver._extendWait(wait).then(() => fs.appendFileSync(driver.successFilePath, driver.successSuffix));
     return driver;
   },
 
   modifyAndFailAfter: (wait = 0) => {
-    driver._extendWait(wait).then(() => fs.appendFileSync(driver.currentSourcePath, '{{{'));
+    driver._extendWait(wait).then(() => fs.appendFileSync(driver.failFilePath, driver.failSuffix));
     return driver;
   },
 
   reset: () => {
-    driver.clearSubscriptions();
     if (driver.proc && driver.proc.kill) {
       driver.proc.kill();
+      delete driver.proc;
     }
 
+    subscriptions.clear();
     driver.wait = Promise.resolve();
-
-    delete driver.proc;
-    delete driver.subProcArgs;
-    delete driver.currentSourcePath;
-
     return driver;
   },
 
   _extendWait: ms => driver.wait = driver.wait.then(() => new Promise(resolve => setTimeout(resolve, ms)))
-};
-
-const childProcessArguments = {
-  fail: () => ['--out', './tmp/output.js', './tmp/fixtures/failing.ts'],
-  succeed: () => ['--out', './tmp/output.js', './tmp/fixtures/passing.ts']
 };
 
 
