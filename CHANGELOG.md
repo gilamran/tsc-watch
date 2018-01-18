@@ -1,6 +1,6 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v1.0.10 - 5/12/2017
+## v1.0.14 - 18/01/2018
 * Fixed Windows newline issue
 
 ## v1.0.9 - 5/12/2017
