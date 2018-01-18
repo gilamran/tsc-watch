@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.15 - 18/01/2018
+* Added `--onFailure` argument
+
 ## v1.0.14 - 18/01/2018
 * Fixed Windows newline issue
 
