@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.16 - 27/01/2018
+* Fixed stdout coloring issues on Mac (Thanks to @jonaskello)
+
 ## v1.0.15 - 18/01/2018
 * Added `--onFailure` argument
 
