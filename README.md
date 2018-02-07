@@ -16,7 +16,7 @@ npm install tsc-watch --save-dev
 ### From Command-Line
 
 ```sh
-tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.ts" --onFailure "echo Beep! Compilation Failed"
+tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js" --onFailure "echo Beep! Compilation Failed"
 ```
 
 ### From Code
