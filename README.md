@@ -1,9 +1,11 @@
 # The TypeScript compiler with `--watch` and a new onSuccess argument
 `tsc-watch` starts the `tsc` (TypeScript compiler) with `--watch` parameter, there are 3 new arguments.
 
-- `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation.
+- `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation, and killed on the next success.
 - `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation.
 - `--onFailure COMMAND` - The `COMMAND` will be executed on failed TypeScript compilation.
+
+All above `COMMAND`s will be killed on process exit
 
 ## Install
 
