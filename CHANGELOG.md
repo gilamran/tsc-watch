@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.17 - 27/01/2018
+* Terminating typescript on SIGTERM event (Thanks to @amir-arad)
+
 ## v1.0.16 - 27/01/2018
 * Fixed stdout coloring issues on Mac (Thanks to @jonaskello)
 
