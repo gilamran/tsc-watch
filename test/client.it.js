@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const mochaEventually = require('mocha-eventually');
 const eventually = fn => mochaEventually(fn, 4000, 10);
 const tscWatchClient = require('../lib/client');
-const { driver: tscWatchDriver } = require('./tsc-watch.it.js');
+const { driver: tscWatchDriver } = require('./driver.js');
 
 describe('Client Events', () => {
   before(() => {
