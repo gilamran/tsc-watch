@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const mochaEventually = require('mocha-eventually');
 const { driver } = require('./driver');
 
-const eventually = fn => mochaEventually(fn, 4000, 10);
+const eventually = fn => mochaEventually(fn, 8000, 10);
 
 describe('TSC-Watch child process messages', () => {
     beforeEach(() => this.listener = sinon.stub());
@@ -22,8 +22,8 @@ describe('TSC-Watch child process messages', () => {
       driver
         .subscribe('subsequent_success', this.listener)
         .startWatch()
-        .modifyAndSucceedAfter(2000)
         .modifyAndSucceedAfter(1000)
+        .modifyAndSucceedAfter(3000)
 
         return eventually(() =>
           expect(this.listener.callCount).to.be.equal(2));

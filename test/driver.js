@@ -8,7 +8,6 @@ const FAIL_FILE_PATH = './tmp/fixtures/failing.ts';
 class Driver {
   constructor() {
     this.subscriptions = new Map();  
-    this.wait = Promise.resolve();
   }
 
   subscribe(processEventName, listener) {
@@ -31,13 +30,13 @@ class Driver {
     return this;
   }
 
-  modifyAndSucceedAfter(wait = 0, isFailingPath) {
-    this._extendWait(wait).then(() => fs.appendFileSync(SUCCESS_FILE_PATH, ' '));
+  modifyAndSucceedAfter(timeToWait = 0, isFailingPath) {
+    this._wait(timeToWait).then(() => fs.appendFileSync(SUCCESS_FILE_PATH, ' '));
     return this;
   }
 
-  modifyAndFailAfter(wait = 0) {
-    this._extendWait(wait).then(() => fs.appendFileSync(FAIL_FILE_PATH, '{{{'));
+  modifyAndFailAfter(timeToWait = 0) {
+    this._wait(timeToWait).then(() => fs.appendFileSync(FAIL_FILE_PATH, '{{{'));
     return this;
   }
 
@@ -48,12 +47,11 @@ class Driver {
     }
 
     this.subscriptions.clear();
-    this.wait = Promise.resolve();
     return this;
   }
 
-  _extendWait(ms) {
-    return this.wait = this.wait.then(() => new Promise(resolve => setTimeout(resolve, ms)));
+  _wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   } 
 }
 
