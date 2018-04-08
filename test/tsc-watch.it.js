@@ -38,4 +38,13 @@ describe('TSC-Watch child process messages', () => {
         return eventually(() =>
           expect(this.listener.callCount).to.be.equal(2));
     });
+
+    it('Should send "compile_errors" when pretty param was set', () => {
+      driver
+        .subscribe('compile_errors', this.listener)
+        .startWatch({ failFirst: true, pretty: true });
+
+        return eventually(() =>
+          expect(this.listener.callCount).to.be.equal(1));
+    });
 });
