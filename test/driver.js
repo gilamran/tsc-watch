@@ -1,50 +1,56 @@
 const { fork } = require('child_process');
 const fs = require('fs');
-const subscriptions = new Map();
 
-const driver = {
-  noop: () => {},
-  wait: Promise.resolve(),
-  successFilePath: './tmp/fixtures/passing.ts',
-  failFilePath: './tmp/fixtures/failing.ts',
-  subscribe: (processEventName, listener) => {
-    subscriptions.set(processEventName, listener);
-    return driver;
-  },
+const noop = () => {};
+const SUCCESS_FILE_PATH = './tmp/fixtures/passing.ts';
+const FAIL_FILE_PATH = './tmp/fixtures/failing.ts';
 
-  startWatch: ({failFirst} = {}) => {
-    driver.proc = fork('./lib/tsc-watch.js', ['--out', './tmp/output.js', failFirst ? driver.failFilePath : driver.successFilePath], { stdio: 'inherit' });
+class Driver {
+  constructor() {
+    this.subscriptions = new Map();  
+    this.wait = Promise.resolve();
+  }
 
-    subscriptions.forEach((handler, evName) =>
-      driver.proc.on('message', event => evName === event
+  subscribe(processEventName, listener) {
+    this.subscriptions.set(processEventName, listener);
+    return this;
+  }
+
+  startWatch({failFirst} = {}) {
+    this.proc = fork('./lib/tsc-watch.js', ['--out', './tmp/output.js', failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH], { stdio: 'inherit' });
+
+    this.subscriptions.forEach((handler, evName) =>
+      this.proc.on('message', event => evName === event
         ? handler(event)
-        : driver.noop()));
+        : noop()));
 
-    return driver;
-  },
+    return this;
+  }
 
-  modifyAndSucceedAfter: (wait = 0, isFailingPath) => {
-    driver._extendWait(wait).then(() => fs.appendFileSync(driver.successFilePath, ' '));
-    return driver;
-  },
+  modifyAndSucceedAfter(wait = 0, isFailingPath) {
+    this._extendWait(wait).then(() => fs.appendFileSync(SUCCESS_FILE_PATH, ' '));
+    return this;
+  }
 
-  modifyAndFailAfter: (wait = 0) => {
-    driver._extendWait(wait).then(() => fs.appendFileSync(driver.failFilePath, '{{{'));
-    return driver;
-  },
+  modifyAndFailAfter(wait = 0) {
+    this._extendWait(wait).then(() => fs.appendFileSync(FAIL_FILE_PATH, '{{{'));
+    return this;
+  }
 
-  reset: () => {
-    if (driver.proc && driver.proc.kill) {
-      driver.proc.kill();
-      delete driver.proc;
+  reset() {
+    if (this.proc && this.proc.kill) {
+      this.proc.kill();
+      this.proc = null;
     }
 
-    subscriptions.clear();
-    driver.wait = Promise.resolve();
-    return driver;
-  },
+    this.subscriptions.clear();
+    this.wait = Promise.resolve();
+    return this;
+  }
 
-  _extendWait: ms => driver.wait = driver.wait.then(() => new Promise(resolve => setTimeout(resolve, ms)))
-};
+  _extendWait(ms) {
+    return this.wait = this.wait.then(() => new Promise(resolve => setTimeout(resolve, ms)));
+  } 
+}
 
-module.exports.driver = driver;
+module.exports.driver = new Driver();
