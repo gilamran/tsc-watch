@@ -1,6 +1,6 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v1.0.18 - 8/04/2018
+## v1.0.19 - 8/04/2018
 * Fixed passing compilation when using --pretty param (Thanks to @tomaba)
 
 ## v1.0.17 - 27/01/2018
