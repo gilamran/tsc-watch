@@ -1,5 +1,10 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.20 - 16/04/2018
+* Fixed ignoring the last arg
+* Added `--noColors` argument
+* Added `--noClearScreen` argument
+
 ## v1.0.19 - 8/04/2018
 * Fixed passing compilation when using --pretty param (Thanks to @tomaba)
 
