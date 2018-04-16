@@ -5,7 +5,6 @@
 - `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation.
 - `--onFailure COMMAND` - The `COMMAND` will be executed on failed TypeScript compilation.
 - `--noColors` - `tsc-watch` colors the output with green on success, and in red on failiure. Add this argument to prevent that.
-- `--noClearScreen` - `typescript` started clearing the console before each compilation, Add this argument to prevent it.
 
 ## Install
 
