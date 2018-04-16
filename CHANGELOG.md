@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.21 - 16/04/2018
+* Removed `--noClearScreen` argument, as typescript added `--preserveWatchOutput`
+
 ## v1.0.20 - 16/04/2018
 * Fixed ignoring the last arg
 * Added `--noColors` argument
