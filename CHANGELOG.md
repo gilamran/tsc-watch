@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.22 - 1/06/2018
+* Added support for Typescript 2.9+
+
 ## v1.0.21 - 16/04/2018
 * Removed `--noClearScreen` argument, as typescript added `--preserveWatchOutput`
 
