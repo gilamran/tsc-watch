@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.23 - 1/06/2018
+* Typescript as a peer dependency (Thanks to @asztal)
+
 ## v1.0.22 - 1/06/2018
 * Added support for Typescript 2.9+
 
