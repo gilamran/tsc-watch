@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.24 - 20/07/2018
+* Killing onFail and onSuccess after compilation
+
 ## v1.0.23 - 1/06/2018
 * Typescript as a peer dependency (Thanks to @asztal)
 
