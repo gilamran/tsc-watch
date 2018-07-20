@@ -1,7 +1,7 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v1.0.25 - 20/07/2018
-* Fixed hadErrors check (Thanks to @tombousso)
+## v1.0.26 - 20/07/2018
+* Fixed several issues with hadErrors check (Thanks to @tombousso)
 
 ## v1.0.24 - 20/07/2018
 * Killing onFail and onSuccess after compilation
