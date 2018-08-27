@@ -25,6 +25,7 @@
     "chalk": "^2.3.0",
     "cross-spawn": "^5.1.0",
     "ps-tree": "^1.1.0",
+    "node-cleanup": "^2.1.2",
     "strip-ansi": "^4.0.0"
   },
   "peerDependencies": {
