@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.28 - 25/09/2018
+* Fixed command args extraction (Thanks to @mscharley)
+
 ## v1.0.27 - 27/08/2018
 * Fixed process termination (Thanks to @igrayson)
 
