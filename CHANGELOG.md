@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.29 - 25/09/2018
+* Fixed regression bug (Thanks to @onehorsetown)
+
 ## v1.0.28 - 25/09/2018
 * Fixed command args extraction (Thanks to @mscharley)
 
