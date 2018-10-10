@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.30 - 10/10/2018
+* Added custom compiler ability (Thanks to @sosoba for the PR)
+
 ## v1.0.29 - 25/09/2018
 * Fixed regression bug (Thanks to @onehorsetown)
 
