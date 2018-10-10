@@ -1,11 +1,11 @@
 # The TypeScript compiler with `--watch` and a new onSuccess argument
-`tsc-watch` starts the TypeScript compiler (default `tsc`) with `--watch` parameter, there are 5 new arguments.
+`tsc-watch` starts a TypeScript compiler with `--watch` parameter, there are 5 new arguments.
 
 - `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation.
 - `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation.
 - `--onFailure COMMAND` - The `COMMAND` will be executed on failed TypeScript compilation.
 - `--noColors` - `tsc-watch` colors the output with green on success, and in red on failiure. Add this argument to prevent that.
-- `--compiler NAME` - The `NAME` will be used instead of typescript compiler.
+- `--compiler PATH` - The `PATH` will be used instead of typescript compiler. Defaults typescript/bin/tsc.
 
 ## Install
 
@@ -18,7 +18,7 @@ npm install tsc-watch --save-dev
 ### From Command-Line
 
 ```sh
-tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js" --onFailure "echo Beep! Compilation Failed" --compiler ttypescript
+tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js" --onFailure "echo Beep! Compilation Failed" --compiler typescript/bin/tsc
 ```
 
 ### From Code
