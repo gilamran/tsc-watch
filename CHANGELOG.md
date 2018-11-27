@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.0.31 - 27/11/2018
+* Upgraded ps-tree, preventing flatmap-stream attack (Thanks to @jeremyhon)
+
 ## v1.0.30 - 10/10/2018
 * Added custom compiler ability (Thanks to @sosoba for the PR)
 
