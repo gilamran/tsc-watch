@@ -1,4 +1,4 @@
-# The TypeScript compiler with `--watch` and a new `--onSuccess` argument
+# The TypeScript compiler with `--onSuccess` argument
 `tsc-watch` starts a TypeScript compiler with `--watch` parameter, there are 5 new arguments.
 
 - `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation.
