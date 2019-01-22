@@ -7,7 +7,7 @@ const FAIL_FILE_PATH = './tmp/fixtures/failing.ts';
 
 class Driver {
   constructor() {
-    this.subscriptions = new Map();  
+    this.subscriptions = new Map();
   }
 
   subscribe(processEventName, listener) {
@@ -15,17 +15,14 @@ class Driver {
     return this;
   }
 
-  startWatch({failFirst, pretty} = {}) {
-    const params = ['--out', './tmp/output.js', failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH];
+  startWatch({ failFirst, pretty } = {}) {
+    const params = ['--noClear', '--out', './tmp/output.js', failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH];
     if (pretty) {
       params.push('--pretty');
     }
     this.proc = fork('./lib/tsc-watch.js', params, { stdio: 'inherit' });
 
-    this.subscriptions.forEach((handler, evName) =>
-      this.proc.on('message', event => evName === event
-        ? handler(event)
-        : noop()));
+    this.subscriptions.forEach((handler, evName) => this.proc.on('message', event => (evName === event ? handler(event) : noop())));
 
     return this;
   }
@@ -52,7 +49,7 @@ class Driver {
 
   _wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  } 
+  }
 }
 
 module.exports.driver = new Driver();
