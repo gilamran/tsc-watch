@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/gilamran/tsc-watch#readme",
   "dependencies": {
-    "chalk": "^2.3.0",
     "cross-spawn": "^5.1.0",
     "node-cleanup": "^2.1.2",
     "ps-tree": "^1.2.0",
