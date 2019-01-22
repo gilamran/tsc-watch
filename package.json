@@ -21,6 +21,13 @@
     "url": "https://github.com/gilamran/tsc-watch/issues"
   },
   "homepage": "https://github.com/gilamran/tsc-watch#readme",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 240
+  },
   "dependencies": {
     "cross-spawn": "^5.1.0",
     "node-cleanup": "^2.1.2",
