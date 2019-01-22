@@ -1,10 +1,12 @@
 # The TypeScript compiler with `--onSuccess` argument
+
 `tsc-watch` starts a TypeScript compiler with `--watch` parameter, there are 5 new arguments.
 
 - `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation.
 - `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation.
 - `--onFailure COMMAND` - The `COMMAND` will be executed on failed TypeScript compilation.
 - `--noColors` - `tsc-watch` colors the output with green on success, and in red on failiure. Add this argument to prevent that.
+- `--noClear` - In watch mode the `tsc` compiler clears the screen before reporting, using this option will prevent that.
 - `--compiler PATH` - The `PATH` will be used instead of typescript compiler. Defaults typescript/bin/tsc.
 
 ## Install
@@ -64,8 +66,9 @@ try {
 ```
 
 Notes:
-* The (`onSuccess`) `COMMAND` will not run if the compilation failed.
-* Any child process (`COMMAND`) will be terminated before creating a new one.
-* `tsc-watch` is using the currently installed TypeScript compiler.
-* `tsc-watch` is not changing the compiler, just adds the new arguments, compilation is the same, and all other arguments are the same.
-* `tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server.
+
+- The (`onSuccess`) `COMMAND` will not run if the compilation failed.
+- Any child process (`COMMAND`) will be terminated before creating a new one.
+- `tsc-watch` is using the currently installed TypeScript compiler.
+- `tsc-watch` is not changing the compiler, just adds the new arguments, compilation is the same, and all other arguments are the same.
+- `tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server.

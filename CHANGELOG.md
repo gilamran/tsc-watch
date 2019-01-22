@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.1.32 - 27/11/2018
+
+Added --noClear command to prevent clearing the screen after each compilation
+
 ## v1.0.32 - 27/11/2018
 
 Removed chalk dependency - (Thanks to @frank-orellana)
