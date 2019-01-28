@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.1.35 - 28/1/2019
+
+Clean code
+
 ## v1.1.32 - 27/11/2018
 
 Added --noClear command to prevent clearing the screen after each compilation
