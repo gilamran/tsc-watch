@@ -4,17 +4,23 @@ const { extractArgs, isCommandExist, hasWatchCommand } = require('../lib/args-ma
 describe('Args Manager', () => {
   it('Should remove the runner args', () => {
     const { args } = extractArgs(['node', 'tsc-watch.js', '-d', '1.ts']);
-    expect(args).to.deep.eq(['--watch', '-d', '1.ts']);
+    expect(args).to.deep.eq(['-d', '1.ts', '--watch']);
   });
 
   it('Should remove custom args', () => {
     const { args } = extractArgs(['node', 'tsc-watch.js', '--compiler', 'MY_COMPILER', '--nocolors', '--noclear', '--onsuccess', 'MY_SUCCESS', '--onfailure', 'MY_FAILURE', '--onfirstsuccess', 'MY_FIRST', '-d', '1.ts']);
-    expect(args).to.deep.eq(['--watch', '-d', '1.ts']);
+    expect(args).to.deep.eq(['-d', '1.ts', '--watch']);
   });
 
   it('Should force watch', () => {
     const { args } = extractArgs(['node', 'tsc-watch.js', '1.ts']);
     expect(args.indexOf('--watch')).to.be.greaterThan(-1);
+  });
+
+  it('Should not change the argv order options if watch was not specified (fixes --build option)', () => {
+    const { args } = extractArgs(['node', 'tsc-watch.js', '--build', '1.tsconfig.conf', '2.tsconfig.conf']);
+    expect(args.indexOf('--build')).to.be.equal(0);
+    expect(args.indexOf('--watch')).to.be.equal(3);
   });
 
   it('Should not re-add watch', () => {
