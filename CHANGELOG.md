@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.1.36 - 31/1/2019
+
+`--watch` will be added to the end of the arguments (Thanks to @barkayal)
+
 ## v1.1.35 - 28/1/2019
 
 Clean code
