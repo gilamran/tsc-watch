@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.1.37 - 8/2/2019
+
+Fixed coloring issues
+
 ## v1.1.36 - 31/1/2019
 
 `--watch` will be added to the end of the arguments (Thanks to @barkayal)
