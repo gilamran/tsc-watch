@@ -9,6 +9,8 @@
 - `--noClear` - In watch mode the `tsc` compiler clears the screen before reporting, using this option will prevent that.
 - `--compiler PATH` - The `PATH` will be used instead of typescript compiler. Defaults typescript/bin/tsc.
 
+All above `COMMAND`s will be killed on process exit
+
 ## Install
 
 ```sh

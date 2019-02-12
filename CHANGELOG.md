@@ -1,5 +1,10 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v2.0.0 - 12/2/2019
+
+As many users requested, from now on `--onFirstSuccess` process will not get killed, only when tsc-watch is killed. (Based on @amir-arad's PR)
+This version fixes Issue #20, #21 and #50.
+
 ## v1.1.37 - 8/2/2019
 
 Fixed coloring issues
