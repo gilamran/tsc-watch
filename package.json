@@ -29,7 +29,7 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": true,
-    "printWidth": 120
+    "printWidth": 100
   },
   "dependencies": {
     "cross-spawn": "^5.1.0",
