@@ -42,7 +42,8 @@ To kill the client, run `watch.kill()`
 Example usage:
 
 ```javascript
-const watch = require('tsc-watch/client');
+const TscWatchClient = require('tsc-watch/client');
+const watch = new TscWatchClient();
 
 watch.on('first_success', () => {
   console.log('First success!');
@@ -56,7 +57,7 @@ watch.on('compile_errors', () => {
   // Your code goes here...
 });
 
-watch.start();
+watch.start('--project', '.');
 
 try {
   // do something...
