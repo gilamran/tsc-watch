@@ -15,6 +15,9 @@
   "keywords": [
     "TypeScript"
   ],
+  "engines": {
+    "node": ">=6.4.0"
+  },
   "author": "Gil Amran",
   "license": "MIT",
   "bugs": {
@@ -43,6 +46,7 @@
     "fs-extra": "^5.0.0",
     "mocha": "^4.0.1",
     "mocha-eventually": "^1.1.0",
-    "sinon": "^4.1.3"
+    "sinon": "^4.1.3",
+    "typescript": "^3.3.3"
   }
 }
