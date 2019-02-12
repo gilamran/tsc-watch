@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v2.1.0 - 27/11/2018
+
+Exporting TscWatchClient for multiple instance of `tsc-watch` - (Thanks to @pronebird)
+
 ## v2.0.0 - 12/2/2019
 
 As many users requested, from now on `--onFirstSuccess` process will not get killed, only when tsc-watch is killed. (Based on @amir-arad's PR)
