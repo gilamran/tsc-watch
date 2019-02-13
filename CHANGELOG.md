@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v1.1.38 - 8/2/2019
+
+Fixed killer issue on old node versions
+
 ## v1.1.37 - 8/2/2019
 
 Fixed coloring issues
