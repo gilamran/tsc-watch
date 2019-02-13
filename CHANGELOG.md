@@ -1,6 +1,6 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v1.1.38 - 8/2/2019
+## v1.1.39 - 8/2/2019
 
 Fixed killer issue on old node versions
 
