@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v2.2.0 - 27/11/2018
+
+Waiting for all the child processes to showdown before closing - (Thanks to @MartinLoeper)
+
 ## v2.1.0 - 27/11/2018
 
 Exporting TscWatchClient for multiple instance of `tsc-watch` - (Thanks to @pronebird)
