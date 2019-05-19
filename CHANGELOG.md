@@ -1,10 +1,14 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v2.2.0 - 27/11/2018
+## v2.2.1 - 19/5/2019
+
+Force kill when on windows - (Thanks to @hwwi)
+
+## v2.2.0 - 13/5/2019
 
 Waiting for all the child processes to showdown before closing - (Thanks to @MartinLoeper)
 
-## v2.1.0 - 27/11/2018
+## v2.1.0 - 12/2/2019
 
 Exporting TscWatchClient for multiple instance of `tsc-watch` - (Thanks to @pronebird)
 
