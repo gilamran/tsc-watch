@@ -1,7 +1,10 @@
 const fs = require('fs');
-const findUp = require('find-up');
+const path = require('path');
 const execSync = require('child_process').execSync;
-const packageJsonPath = findUp.sync('package.json');
+const packageJsonPath = path.join(process.cwd(), 'package.json');
+if (fs.existsSync(packageJsonPath) === false) {
+  console.error(`package.json was not found at "${packageJsonPath}"`);
+}
 
 const run = (command, options) => execSync(command, { encoding: 'utf8', ...options });
 
@@ -39,13 +42,13 @@ function bumpVersion(version, upgradeType) {
   }
 }
 
-function upgradePackageJson() {
+function upgradePackageJson(upgradeType) {
   const packageJson = require(packageJsonPath);
   const { version } = packageJson;
-  const newVersion = bumpVersion(version, 'patch');
+  const newVersion = bumpVersion(version, upgradeType);
   packageJson.version = newVersion;
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
-  console.log(`Version bumped from ${version} to ${packageJson.version}`);
+  console.log(`$[${upgradeType}] Version bumped from ${version} to ${packageJson.version}`);
   return newVersion;
 }
 
@@ -56,7 +59,17 @@ function commitPackageJson(newVersion) {
   run(`git push origin master --tags`);
 }
 
+let upgradeType = 'patch';
+if (process.argv.length === 3) {
+  upgradeType = process.argv[2].toLowerCase();
+  if (['major', 'minor', 'patch'].indexOf(upgradeType) === -1) {
+    console.error(`\nSyntax: node release.js UPGRADE_TYPE\n`);
+    console.error(`   UPGRADE_TYPE: major | minor | patch.      default: patch\n\n`);
+    process.exit(1);
+  }
+}
+
 ensureNothingStaged();
 ensurePackageJsonHasNoChanges();
-const newVersion = upgradePackageJson();
+const newVersion = upgradePackageJson(upgradeType);
 commitPackageJson(newVersion);
