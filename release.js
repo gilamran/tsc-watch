@@ -29,10 +29,10 @@ function bumpVersion(version, upgradeType) {
 
   switch (upgradeType) {
     case 'major':
-      return `${major + 1}.${minor}.${patch}`;
+      return `${major + 1}.0.0`;
 
     case 'minor':
-      return `${major}.${minor + 1}.${patch}`;
+      return `${major}.${minor + 1}.0`;
 
     case 'patch':
       return `${major}.${minor}.${patch + 1}`;
