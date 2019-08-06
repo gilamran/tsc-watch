@@ -48,7 +48,7 @@ function upgradePackageJson(upgradeType) {
   const newVersion = bumpVersion(version, upgradeType);
   packageJson.version = newVersion;
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
-  console.log(`$[${upgradeType}] Version bumped from ${version} to ${packageJson.version}`);
+  console.log(`[${upgradeType}] Version bumped from ${version} to ${packageJson.version}`);
   return newVersion;
 }
 
