@@ -15,8 +15,15 @@ class Driver {
     return this;
   }
 
-  startWatch({ failFirst, pretty } = {}) {
-    const params = ['--noClear', '--out', './tmp/output.js', failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH];
+  startWatch({ failFirst, pretty, compiler } = {}) {
+    const params = [
+      '--noClear',
+      '--out',
+      './tmp/output.js',
+      failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH,
+      '--compiler',
+      compiler
+    ];
     if (pretty) {
       params.push('--pretty');
     }

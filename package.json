@@ -4,7 +4,7 @@
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "publish": "node release.js",
-    "test": "mocha test/**/*.js"
+    "test": "mocha \"test/{,!(tsc-list)/**/}*.js\""
   },
   "bin": {
     "tsc-watch": "./index.js"
