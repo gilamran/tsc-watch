@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v3.0.0 - 19/9/2019
+
+onSuccess will run on EVERY successful compilation, also on the first success. - (Thanks to @mchl-hub for the idea)
+
 ## v2.2.1 - 19/5/2019
 
 Force kill when on windows - (Thanks to @hwwi)
