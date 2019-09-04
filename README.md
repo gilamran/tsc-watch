@@ -4,8 +4,8 @@
 
 `tsc-watch` starts a TypeScript compiler with `--watch` parameter, there are 5 new arguments.
 
-- `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation.
-- `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation.
+- `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation. The process will be killed and restarted on every successful compilation.
+- `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation, it will not get killed on every success.
 - `--onFailure COMMAND` - The `COMMAND` will be executed on failed TypeScript compilation.
 - `--noColors` - `tsc-watch` colors the output with green on success, and in red on failiure. Add this argument to prevent that.
 - `--noClear` - In watch mode the `tsc` compiler clears the screen before reporting, using this option will prevent that.
