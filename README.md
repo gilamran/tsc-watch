@@ -33,6 +33,13 @@ tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js" --onFail
 tsc-watch --onSuccess "node ./dist/server.js" --onFailure "echo Beep! Compilation Failed" --compiler typescript/bin/tsc
 ```
 
+### TypeScript Path Mapper
+
+- install [@ef-carbon/tspm](https://www.npmjs.com/package/@ef-carbon/tspm)
+- `--project` or `-p` is required
+
+Example: `tsc-watch -p tsconfig.json --onSuccess "node ./dist/server.js"`
+
 ### From Code
 
 The client is implemented as an instance of `Node.JS`'s `EventEmitter`, with the following events:
@@ -55,7 +62,7 @@ watch.on('first_success', () => {
   console.log('First success!');
 });
 
-watch.on('subsequent_success', () => {
+watch.on('success', () => {
   // Your code goes here...
 });
 
