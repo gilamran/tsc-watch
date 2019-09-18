@@ -1,6 +1,6 @@
 {
   "name": "tsc-watch",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "publish": "node release.js",
