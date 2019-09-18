@@ -55,7 +55,7 @@ watch.on('first_success', () => {
   console.log('First success!');
 });
 
-watch.on('subsequent_success', () => {
+watch.on('success', () => {
   // Your code goes here...
 });
 
