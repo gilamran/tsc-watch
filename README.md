@@ -12,7 +12,7 @@
 - `--compiler PATH` - The `PATH` will be used instead of typescript compiler. Defaults typescript/bin/tsc.
 
 Notes:
-* That all the above `COMMAND`s will be killed on process exit.
+* That all the above `COMMAND`s will be killed on process exit. (Using `SIGTERM`)
 * A `COMMAND` is a single command and not multi command like `script1.sh && script2.sh`
 
 ## Install
