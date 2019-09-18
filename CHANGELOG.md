@@ -4,7 +4,7 @@
 
 Terminating previous processes is now done with `SIGTERM` instead of `SIGUSR2`. - (Thanks to @zontarian)
 
-## v3.0.0 - 19/9/2019
+## v3.0.0 - 9/9/2019
 
 onSuccess will run on EVERY successful compilation, also on the first success. - (Thanks to @mchl-hub for the idea)
 
