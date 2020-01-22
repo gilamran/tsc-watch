@@ -1,19 +1,27 @@
 [![Build Status](https://travis-ci.com/gilamran/tsc-watch.svg?branch=master)](https://travis-ci.com/gilamran/tsc-watch)
 
-# The TypeScript compiler with `--onSuccess` argument
+# The nodemon for TypeScript
 
-`tsc-watch` starts a TypeScript compiler with `--watch` parameter, there are 5 new arguments.
+`tsc-watch` starts a TypeScript compiler with `--watch` parameter, with the ability to react to compilation status.
+`tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server, similar to nodemon but for TypeCcript.
 
-- `--onSuccess COMMAND` - The `COMMAND` will be executed on every successful TypeScript compilation. The process will be killed and restarted on every successful compilation.
-- `--onFirstSuccess COMMAND` - The `COMMAND` will be executed only one time, on the first successful TypeScript compilation, it will not get killed on every success.
-- `--onFailure COMMAND` - The `COMMAND` will be executed on failed TypeScript compilation.
-- `--noColors` - `tsc-watch` colors the output with green on success, and in red on failiure. Add this argument to prevent that.
-- `--noClear` - In watch mode the `tsc` compiler clears the screen before reporting, using this option will prevent that.
-- `--compiler PATH` - The `PATH` will be used instead of typescript compiler. Defaults typescript/bin/tsc.
+| Argument | Description |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| `--onSuccess COMMAND` | Executes `COMMAND` on **every successful** compilation. |
+| `--onFirstSuccess COMMAND` | Executes `COMMAND` on the **first successful** compilation. |
+| `--onFailure COMMAND` | Executes `COMMAND` on **every failed** compilation. |
+| `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation. |
+| `--noColors` | By default tsc-watch adds colors the output with green<br>on success, and in red on failiure. <br>Add this argument to prevent that. |
+| `--noClear` | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that. |
+| `--compiler PATH` | The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc` |
 
 Notes:
+
 * That all the above `COMMAND`s will be killed on process exit. (Using `SIGTERM`)
+  
 * A `COMMAND` is a single command and not multi command like `script1.sh && script2.sh`
+  
+* Any child process (`COMMAND`) will be terminated before creating a new one.
 
 ## Install
 
@@ -26,11 +34,17 @@ npm install tsc-watch --save-dev
 ### From Command-Line
 
 ```sh
-## Compiles the server.ts into the dist folder and run it
-tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js" --onFailure "echo Beep! Compilation Failed" --compiler typescript/bin/tsc
+## Watching a project (with tsconfig.json)
+tsc-watch --onSuccess "node ./dist/server.js"
 
-## With tsconfig.json
-tsc-watch --onSuccess "node ./dist/server.js" --onFailure "echo Beep! Compilation Failed" --compiler typescript/bin/tsc
+## Beep on failure
+tsc-watch --onFailure "echo Beep! Compilation Failed"
+
+## Wathcing a single file
+tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js"
+
+## Custom compiler
+tsc-watch --onSuccess "node ./dist/server.js" --compiler my-typescript/bin/tsc
 ```
 
 ### From Code
@@ -75,7 +89,5 @@ try {
 Notes:
 
 - The (`onSuccess`) `COMMAND` will not run if the compilation failed.
-- Any child process (`COMMAND`) will be terminated before creating a new one.
 - `tsc-watch` is using the currently installed TypeScript compiler.
 - `tsc-watch` is not changing the compiler, just adds the new arguments, compilation is the same, and all other arguments are the same.
-- `tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server.

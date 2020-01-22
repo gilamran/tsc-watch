@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { extractArgs, isCommandExist, hasWatchCommand } = require('../lib/args-manager');
+const { extractArgs } = require('../lib/args-manager');
 
 describe('Args Manager', () => {
   it('Should remove the runner args', () => {
@@ -42,6 +42,11 @@ describe('Args Manager', () => {
   it('Should return the onFailureCommand', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onFailureCommand).to.eq(null);
     expect(extractArgs(['node', 'tsc-watch.js', '--onFailure', 'COMMAND_TO_RUN', '1.ts']).onFailureCommand).to.eq('COMMAND_TO_RUN');
+  });
+
+  it('Should return the onCompilationComplete', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onCompilationComplete).to.eq(null);
+    expect(extractArgs(['node', 'tsc-watch.js', '--onCompilationComplete', 'COMMAND_TO_RUN', '1.ts']).onCompilationComplete).to.eq('COMMAND_TO_RUN');
   });
 
   it('Should return the noColors', () => {

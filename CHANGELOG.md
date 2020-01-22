@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.1.0 - 22/1/2020
+
+Added the `onCompilationComplete` option - (Thanks to @ackvf for the idea)
+
 ## v4.0.0 - 19/9/2019
 
 Terminating previous processes is now done with `SIGTERM` instead of `SIGUSR2`. - (Thanks to @zontarian)
