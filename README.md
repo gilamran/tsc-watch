@@ -3,7 +3,7 @@
 # The nodemon for TypeScript
 
 `tsc-watch` starts a TypeScript compiler with `--watch` parameter, with the ability to react to compilation status.
-`tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server, similar to nodemon but for TypeCcript.
+`tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server, similar to nodemon but for TypeScript.
 
 | Argument | Description |
 |-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
