@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.2.0 - 29/2/2020
+
+Using readline instead of raw stdout buffer - (Thanks to @Janpot for the idea)
+
 ## v4.1.0 - 22/1/2020
 
 Added the `onCompilationComplete` option - (Thanks to @ackvf for the idea)
