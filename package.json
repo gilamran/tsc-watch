@@ -3,7 +3,6 @@
   "version": "4.2.2",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
-    "publish": "node release.js",
     "test": "mocha test/**/*.js"
   },
   "bin": {
