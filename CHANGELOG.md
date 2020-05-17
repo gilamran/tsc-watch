@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.2.6 - 18/5/2020
+
+Using number 15 instead of SIGTERM to support POSIX standard - (Thanks to @Asarew)
+
 ## v4.2.0 - 29/2/2020
 
 Using readline instead of raw stdout buffer - (Thanks to @Janpot for the idea)
