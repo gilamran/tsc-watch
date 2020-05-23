@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.2.8 - 23/5/2020
+
+Fix: spawn compiler using node, this fixes issues with yarn v2 (pnp) - (Thanks to @merceyz)
+
 ## v4.2.6 - 18/5/2020
 
 Using number 15 instead of SIGTERM to support POSIX standard - (Thanks to @Asarew)
