@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.2.9 - 23/6/2020
+
+fix: upgrade cross-spawn and strip-ansi (node 8+)  - (Thanks to @FauxFaux for the PR)
+
 ## v4.2.8 - 23/5/2020
 
 Fix: spawn compiler using node, this fixes issues with yarn v2 (pnp) - (Thanks to @merceyz)
