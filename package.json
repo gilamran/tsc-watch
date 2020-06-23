@@ -32,18 +32,18 @@
     "printWidth": 100
   },
   "dependencies": {
-    "cross-spawn": "^5.1.0",
+    "cross-spawn": "^7.0.3",
     "node-cleanup": "^2.1.2",
     "ps-tree": "^1.2.0",
     "string-argv": "^0.1.1",
-    "strip-ansi": "^4.0.0"
+    "strip-ansi": "^6.0.0"
   },
   "peerDependencies": {
     "typescript": "*"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "fs-extra": "^5.0.0",
+    "fs-extra": "^8.1.0",
     "mocha": "^7.1.2",
     "mocha-eventually": "^1.1.0",
     "sinon": "^9.0.2",
