@@ -11,7 +11,7 @@
 | `--onFirstSuccess COMMAND` | Executes `COMMAND` on the **first successful** compilation. |
 | `--onFailure COMMAND` | Executes `COMMAND` on **every failed** compilation. |
 | `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation. |
-| `--noColors` | By default tsc-watch adds colors the output with green<br>on success, and in red on failiure. <br>Add this argument to prevent that. |
+| `--noColors` | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that. |
 | `--noClear` | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that. |
 | `--compiler PATH` | The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc` |
 
@@ -40,7 +40,7 @@ tsc-watch --onSuccess "node ./dist/server.js"
 ## Beep on failure
 tsc-watch --onFailure "echo Beep! Compilation Failed"
 
-## Wathcing a single file
+## Watching a single file
 tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js"
 
 ## Custom compiler
