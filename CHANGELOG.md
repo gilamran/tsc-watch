@@ -1,5 +1,7 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.4.0 - 26/5/ 2021
+tsc-watch is now listenning to message and reacts to them.
 ## v4.3.1 - 26/5/2021
 
 fix: compiler resolving  - (Thanks to @merceyz for the PR)

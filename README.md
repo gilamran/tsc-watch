@@ -47,7 +47,14 @@ tsc-watch server.ts --outDir ./dist --onSuccess "node ./dist/server.js"
 tsc-watch --onSuccess "node ./dist/server.js" --compiler my-typescript/bin/tsc
 ```
 
-### From Code
+### From npm script
+```
+"dev-server": "tsc-watch --noClear -p ./src/tsconfig.json --onSuccess \"node ./dist/server.js\"",
+```
+
+### From javacript
+
+You can see a detailed example [here](https://github.com/gilamran/tsc-watch/blob/master/tsc-watch-client-example.js)
 
 The client is implemented as an instance of `Node.JS`'s `EventEmitter`, with the following events:
 
