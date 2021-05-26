@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.3.1 - 26/5/2021
+
+fix: compiler resolving  - (Thanks to @merceyz for the PR)
+
 ## v4.2.9 - 23/6/2020
 
 fix: upgrade cross-spawn and strip-ansi (node 8+)  - (Thanks to @FauxFaux for the PR)
