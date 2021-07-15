@@ -52,7 +52,7 @@ tsc-watch --onSuccess "node ./dist/server.js" --compiler my-typescript/bin/tsc
 "dev-server": "tsc-watch --noClear -p ./src/tsconfig.json --onSuccess \"node ./dist/server.js\"",
 ```
 
-### From javacript
+### From javascript
 
 You can see a detailed example [here](https://github.com/gilamran/tsc-watch/blob/master/tsc-watch-client-example.js)
 
