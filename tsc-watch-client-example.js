@@ -2,6 +2,10 @@ const readline = require('readline');
 const TscWatchClient = require('./client');
 const client = new TscWatchClient();
 
+client.on('started', () => {
+  console.log('Compilation started');
+});
+
 client.on('first_success', () => {
   console.log('Interactive mode');
   console.log('  Press "r" to re-run the onSuccess command, esc to exit.\n');

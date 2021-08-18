@@ -8,7 +8,7 @@ describe('Args Manager', () => {
   });
 
   it('Should remove custom args', () => {
-    const { args } = extractArgs(['node', 'tsc-watch.js', '--compiler', 'MY_COMPILER', '--nocolors', '--noclear', '--onsuccess', 'MY_SUCCESS', '--onfailure', 'MY_FAILURE', '--onfirstsuccess', 'MY_FIRST', '-d', '1.ts']);
+    const { args } = extractArgs(['node', 'tsc-watch.js', '--compiler', 'typescript/bin/tsc', '--nocolors', '--noclear', '--onsuccess', 'MY_SUCCESS', '--onfailure', 'MY_FAILURE', '--onfirstsuccess', 'MY_FIRST', '-d', '1.ts']);
     expect(args).to.deep.eq(['-d', '1.ts', '--watch']);
   });
 
@@ -44,6 +44,11 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '--onFailure', 'COMMAND_TO_RUN', '1.ts']).onFailureCommand).to.eq('COMMAND_TO_RUN');
   });
 
+  it('Should return the onCompilationStarted', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onCompilationStarted).to.eq(null);
+    expect(extractArgs(['node', 'tsc-watch.js', '--onCompilationStarted', 'COMMAND_TO_RUN', '1.ts']).onCompilationStarted).to.eq('COMMAND_TO_RUN');
+  });
+
   it('Should return the onCompilationComplete', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onCompilationComplete).to.eq(null);
     expect(extractArgs(['node', 'tsc-watch.js', '--onCompilationComplete', 'COMMAND_TO_RUN', '1.ts']).onCompilationComplete).to.eq('COMMAND_TO_RUN');
@@ -61,6 +66,6 @@ describe('Args Manager', () => {
 
   it('Should return the compiler', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).compiler).to.eq('typescript/bin/tsc');
-    expect(extractArgs(['node', 'tsc-watch.js', '--compiler', 'MY_COMPILER', '1.ts']).compiler).to.eq('MY_COMPILER');
+    expect(extractArgs(['node', 'tsc-watch.js', '--compiler', 'typescript/lib/tsc', '1.ts']).compiler).to.eq(require.resolve('typescript/lib/tsc'));
   });
 });

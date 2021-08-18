@@ -1,75 +1,82 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.4.1 - 17/8/2021
+
+- Added `onCompilationStarted` option - (Thanks to @axtk for the idea and @dko-slapdash for the PR)
+- Fix: enable unit tests which were turned off accidentally
+
 ## v4.4.0 - 26/5/ 2021
-tsc-watch is now listenning to message and reacts to them.
+
+- tsc-watch is now listening to message and reacts to them
+
 ## v4.3.1 - 26/5/2021
 
-fix: compiler resolving  - (Thanks to @merceyz for the PR)
+- Fix: compiler resolving  - (Thanks to @merceyz for the PR)
 
 ## v4.2.9 - 23/6/2020
 
-fix: upgrade cross-spawn and strip-ansi (node 8+)  - (Thanks to @FauxFaux for the PR)
+- Fix: upgrade cross-spawn and strip-ansi (node 8+)  - (Thanks to @FauxFaux for the PR)
 
 ## v4.2.8 - 23/5/2020
 
-Fix: spawn compiler using node, this fixes issues with yarn v2 (pnp) - (Thanks to @merceyz)
+- Fix: spawn compiler using node, this fixes issues with yarn v2 (pnp) - (Thanks to @merceyz)
 
 ## v4.2.6 - 18/5/2020
 
-Using number 15 instead of SIGTERM to support POSIX standard - (Thanks to @Asarew)
+- Using number 15 instead of SIGTERM to support POSIX standard - (Thanks to @Asarew)
 
 ## v4.2.0 - 29/2/2020
 
-Using readline instead of raw stdout buffer - (Thanks to @Janpot for the idea)
+- Using readline instead of raw stdout buffer - (Thanks to @Janpot for the idea)
 
 ## v4.1.0 - 22/1/2020
 
-Added the `onCompilationComplete` option - (Thanks to @ackvf for the idea)
+- Added the `onCompilationComplete` option - (Thanks to @ackvf for the idea)
 
 ## v4.0.0 - 19/9/2019
 
-Terminating previous processes is now done with `SIGTERM` instead of `SIGUSR2`. - (Thanks to @zontarian)
+- Terminating previous processes is now done with `SIGTERM` instead of `SIGUSR2` - (Thanks to @zontarian)
 
 ## v3.0.0 - 9/9/2019
 
-onSuccess will run on EVERY successful compilation, also on the first success. - (Thanks to @mchl-hub for the idea)
+- onSuccess will run on EVERY successful compilation, also on the first success - (Thanks to @mchl-hub for the idea)
 
 ## v2.2.1 - 19/5/2019
 
-Force kill when on windows - (Thanks to @hwwi)
+- Force kill when on windows - (Thanks to @hwwi)
 
 ## v2.2.0 - 13/5/2019
 
-Waiting for all the child processes to showdown before closing - (Thanks to @MartinLoeper)
+- Waiting for all the child processes to showdown before closing - (Thanks to @MartinLoeper)
 
 ## v2.1.0 - 12/2/2019
 
-Exporting TscWatchClient for multiple instance of `tsc-watch` - (Thanks to @pronebird)
+- Exporting TscWatchClient for multiple instance of `tsc-watch` - (Thanks to @pronebird)
 
 ## v2.0.0 - 12/2/2019
 
-As many users requested, from now on `--onFirstSuccess` process will not get killed, only when tsc-watch is killed. (Based on @amir-arad's PR)
+- As many users requested, from now on `--onFirstSuccess` process will not get killed, only when tsc-watch is killed. (Based on @amir-arad's PR)
 This version fixes Issue #20, #21 and #50.
 
 ## v1.1.37 - 8/2/2019
 
-Fixed coloring issues
+- Fixed coloring issues
 
 ## v1.1.36 - 31/1/2019
 
-`--watch` will be added to the end of the arguments (Thanks to @barkayal)
+- `--watch` will be added to the end of the arguments (Thanks to @barkayal)
 
 ## v1.1.35 - 28/1/2019
 
-Clean code
+- Clean code
 
 ## v1.1.32 - 27/11/2018
 
-Added --noClear command to prevent clearing the screen after each compilation
+- Added --noClear command to prevent clearing the screen after each compilation
 
 ## v1.0.32 - 27/11/2018
 
-Removed chalk dependency - (Thanks to @frank-orellana)
+- Removed chalk dependency - (Thanks to @frank-orellana)
 
 ## v1.0.31 - 27/11/2018
 
