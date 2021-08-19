@@ -1,6 +1,6 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v4.4.1 - 17/8/2021
+## v4.5.0 - 19/8/2021
 
 - Added `onCompilationStarted` option - (Thanks to @axtk for the idea and @dko-slapdash for the PR)
 - Fix: enable unit tests which were turned off accidentally
