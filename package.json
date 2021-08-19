@@ -6,7 +6,7 @@
     "test": "mocha test/**/*.js"
   },
   "bin": {
-    "tsc-watch": "./index.js"
+    "tsc-watch": "index.js"
   },
   "repository": {
     "type": "git",

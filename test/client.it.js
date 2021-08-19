@@ -15,6 +15,13 @@ describe('Client Events', () => {
   afterEach(() => watchClient.kill());
 
   describe('Events', () => {
+    it('Should emit "started" on compilation start', () => {
+      watchClient.on('started', callback);
+      watchClient.start('--noClear', '--out', './tmp/output.js', './tmp/fixtures/failing.ts');
+
+      return eventually(() => expect(callback.calledOnce).to.be.true);
+    });
+
     it('Should emit "first_success" on first success', () => {
       watchClient.on('first_success', callback);
       watchClient.start('--noClear', '--out', './tmp/output.js', './tmp/fixtures/passing.ts');

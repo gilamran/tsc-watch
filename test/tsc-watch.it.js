@@ -9,6 +9,15 @@ describe('TSC-Watch child process messages', () => {
   beforeEach(() => (this.listener = sinon.stub()));
   afterEach(() => driver.reset());
 
+  it('Should send "started" on compilation start', () => {
+    driver
+      .subscribe('started', this.listener)
+      .startWatch()
+      .modifyAndSucceedAfter(1000);
+
+    return eventually(() => expect(this.listener.callCount).to.be.equal(1));
+  });
+
   it('Should send "first_success" on first success', () => {
     driver
       .subscribe('first_success', this.listener)
