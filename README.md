@@ -14,6 +14,7 @@
 | `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation. |
 | `--noColors` | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that. |
 | `--noClear` | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that. |
+| `--silent` | Do not print any messages on stdout. |
 | `--compiler PATH` | The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc` |
 
 Notes:

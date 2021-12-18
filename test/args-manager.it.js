@@ -63,6 +63,11 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).noClear).to.eq(false);
     expect(extractArgs(['node', 'tsc-watch.js', '--noClear', '1.ts']).noClear).to.eq(true);
   });
+  
+  it('Should return the silent', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).silent).to.eq(false);
+    expect(extractArgs(['node', 'tsc-watch.js', '--silent', '1.ts']).silent).to.eq(true);
+  });
 
   it('Should return the compiler', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).compiler).to.eq('typescript/bin/tsc');
