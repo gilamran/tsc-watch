@@ -3,7 +3,7 @@
   "version": "4.6.0",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "test": "mocha --timeout 10000 test/**/*.js"
   },
   "bin": {
     "tsc-watch": "index.js"
@@ -42,11 +42,10 @@
     "typescript": "*"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "fs-extra": "^8.1.0",
+    "chai": "^4.3.4",
+    "fs-extra": "^10.0.0",
     "mocha": "^9.1.3",
-    "mocha-eventually": "^1.1.0",
-    "sinon": "^9.0.2",
-    "typescript": "^3.3.3"
+    "sinon": "^12.0.1",
+    "typescript": "^4.5.4"
   }
 }

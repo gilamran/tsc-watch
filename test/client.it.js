@@ -1,8 +1,8 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const mochaEventually = require('mocha-eventually');
-const eventually = fn => mochaEventually(fn, 8000, 50);
 const TscWatchClient = require('../lib/client');
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 describe('Client Events', () => {
   let watchClient;
@@ -15,32 +15,36 @@ describe('Client Events', () => {
   afterEach(() => watchClient.kill());
 
   describe('Events', () => {
-    it('Should emit "started" on compilation start', () => {
+    it('Should emit "started" on compilation start', async () => {
       watchClient.on('started', callback);
       watchClient.start('--noClear', '--out', './tmp/output.js', './tmp/fixtures/failing.ts');
+      await wait(2000)
 
-      return eventually(() => expect(callback.calledOnce).to.be.true);
+      expect(callback.calledOnce).to.be.true;
     });
 
-    it('Should emit "first_success" on first success', () => {
+    it('Should emit "first_success" on first success', async () => {
       watchClient.on('first_success', callback);
       watchClient.start('--noClear', '--out', './tmp/output.js', './tmp/fixtures/passing.ts');
+      await wait(2000)
 
-      return eventually(() => expect(callback.calledOnce).to.be.true);
+      expect(callback.calledOnce).to.be.true;
     });
 
-    it('Should emit "success" on first success', () => {
+    it('Should emit "success" on first success', async () => {
       watchClient.on('success', callback);
       watchClient.start('--noClear', '--out', './tmp/output.js', './tmp/fixtures/passing.ts');
+      await wait(2000)
 
-      return eventually(() => expect(callback.calledOnce).to.be.true);
+      expect(callback.calledOnce).to.be.true;
     });
 
-    it('Should fire "compile_errors" on when tsc compile errors occur', () => {
+    it('Should fire "compile_errors" on when tsc compile errors occur', async () => {
       watchClient.on('compile_errors', callback);
       watchClient.start('--noClear', '--out', './tmp/output.js', './tmp/fixtures/failing.ts');
+      await wait(2000)
 
-      return eventually(() => expect(callback.calledOnce).to.be.true);
+      expect(callback.calledOnce).to.be.true;
     });
   });
 });

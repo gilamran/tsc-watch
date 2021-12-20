@@ -20,7 +20,7 @@ class Driver {
     if (pretty) {
       params.push('--pretty');
     }
-    this.proc = fork('./lib/tsc-watch.js', params, { stdio: 'ignore' });
+    this.proc = fork('./lib/tsc-watch.js', params, { stdio: 'inherit' });
 
     this.subscriptions.forEach((handler, evName) => this.proc.on('message', event => (evName === event ? handler(event) : noop())));
 
@@ -28,12 +28,12 @@ class Driver {
   }
 
   modifyAndSucceedAfter(timeToWait = 0, isFailingPath) {
-    this._wait(timeToWait).then(() => fs.appendFileSync(SUCCESS_FILE_PATH, ' '));
+    this.wait(timeToWait).then(() => fs.appendFileSync(SUCCESS_FILE_PATH, '\n '));
     return this;
   }
 
   modifyAndFailAfter(timeToWait = 0) {
-    this._wait(timeToWait).then(() => fs.appendFileSync(FAIL_FILE_PATH, '{{{'));
+    this.wait(timeToWait).then(() => fs.appendFileSync(FAIL_FILE_PATH, '{{{'));
     return this;
   }
 
@@ -47,7 +47,7 @@ class Driver {
     return this;
   }
 
-  _wait(ms) {
+  wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
