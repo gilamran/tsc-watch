@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.6.0 - 20/12/2021
+
+- Added `silent` option - (Thanks to @axtk for the idea and @fmvilas for the PR)
+
 ## v4.5.0 - 19/8/2021
 
 - Added `onCompilationStarted` option - (Thanks to @axtk for the idea and @dko-slapdash for the PR)
