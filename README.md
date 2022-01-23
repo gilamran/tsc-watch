@@ -31,6 +31,11 @@ Notes:
 npm install tsc-watch --save-dev
 ```
 
+```sh
+## for command-line usage
+npm install -g typescript tsc-watch
+```
+
 ## Usage
 
 ### From Command-Line
