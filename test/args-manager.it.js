@@ -54,6 +54,11 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '--onCompilationComplete', 'COMMAND_TO_RUN', '1.ts']).onCompilationComplete).to.eq('COMMAND_TO_RUN');
   });
 
+  it('Should return the maxNodeMem', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).maxNodeMem).to.eq(null);
+    expect(extractArgs(['node', 'tsc-watch.js', '--maxNodeMem', '1024']).maxNodeMem).to.eq('1024');
+  });
+
   it('Should return the noColors', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).noColors).to.eq(false);
     expect(extractArgs(['node', 'tsc-watch.js', '--noColors', '1.ts']).noColors).to.eq(true);
@@ -63,7 +68,7 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).noClear).to.eq(false);
     expect(extractArgs(['node', 'tsc-watch.js', '--noClear', '1.ts']).noClear).to.eq(true);
   });
-  
+
   it('Should return the silent', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).silent).to.eq(false);
     expect(extractArgs(['node', 'tsc-watch.js', '--silent', '1.ts']).silent).to.eq(true);
