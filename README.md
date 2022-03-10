@@ -12,7 +12,7 @@
 | `--onFailure COMMAND` | Executes `COMMAND` on **every failed** compilation. |
 | `--onCompilationStarted COMMAND` | Executes `COMMAND` on **every compilation start** event (initial and incremental). |
 | `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation. |
-| `--maxNodeMem` | Call `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory. |
+| `--maxNodeMem` | Calls `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory. |
 | `--noColors` | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that. |
 | `--noClear` | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that. |
 | `--silent` | Do not print any messages on stdout. |
@@ -70,6 +70,7 @@ The client is implemented as an instance of `Node.JS`'s `EventEmitter`, with the
 - `first_success` - Emitted upon first successful compilation.
 - `subsequent_success` - Emitted upon every subsequent successful compilation.
 - `compile_errors` - Emitted upon every failing compilation.
+- `file_emitted` - Emitted upon every file transpiled if `--listEmittedFiles` is used.
 
 Once subscribed to the relevant events, start the client by running `watch.start()`
 
