@@ -1,4 +1,3 @@
-const child_process = require('child_process');
 const { expect } = require('chai');
 const { detectState } = require('../lib/stdout-manipulator');
 
