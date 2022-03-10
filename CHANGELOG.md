@@ -2,12 +2,12 @@
 
 ## v4.6.2 - 10/01/2022
 
-- Added tsc `--listEmittedFiles` support [issue](https://github.com/gilamran/tsc-watch/issues/138)
+- Added `file_emitted` signal support when `--listEmittedFiles` is used [issue](https://github.com/gilamran/tsc-watch/issues/138)
 - Added client new event `file_emitted` with the emitted file path
 
-## v4.6.1 - 09/01/2022
+## v4.6.1 - 10/3/2022
 
-- Added `--maxNodeMem` param to set manually node allocated memory [issue](https://github.com/gilamran/tsc-watch/issues/137)
+- Added `--maxNodeMem` param to set manually node allocated memory [issue](https://github.com/gilamran/tsc-watch/issues/137) - (Thanks to @pp0rtal for the idea and the PR!)
 
 ## v4.6.0 - 20/12/2021
 
