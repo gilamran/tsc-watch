@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v4.6.1 - 10/3/2022
+
+- Add --maxNodeMem param to tweak node tsc allocated memory - (Thanks to @pp0rtal for the idea and the PR!)
 ## v4.6.0 - 20/12/2021
 
 - Added `silent` option - (Thanks to @axtk for the idea and @fmvilas for the PR)
