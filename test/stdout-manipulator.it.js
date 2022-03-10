@@ -10,6 +10,7 @@ describe('stdout-manipulator', () => {
                 compilationStarted: false,
                 compilationError: false,
                 compilationComplete: false,
+                fileEmitted: null,
             });
         });
 
@@ -19,6 +20,7 @@ describe('stdout-manipulator', () => {
                 compilationStarted: false,
                 compilationError: false,
                 compilationComplete: false,
+                fileEmitted: null,
             });
         });
 
@@ -36,6 +38,11 @@ describe('stdout-manipulator', () => {
             it('Should detect a compilation complete', async () => {
                 const { compilationComplete } = detectState('[\x1B[90m11:32:26 AM\x1B[0m] Found 4 errors. Watching for file changes.');
                 expect(compilationComplete).to.equal(true);
+            });
+
+            it('Should detect an emitted file', async () => {
+                const { fileEmitted } = detectState('TSFILE: /my/dist/hello.js');
+                expect(fileEmitted).to.equal('/my/dist/hello.js');
             });
         })
     });
