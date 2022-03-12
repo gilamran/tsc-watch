@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v5.0.0 - 12/03/2022
+- Converted to Typescript
+
 ## v4.6.2 - 10/01/2022
 
 - Added `file_emitted` signal support when `--listEmittedFiles` is used [issue](https://github.com/gilamran/tsc-watch/issues/138)

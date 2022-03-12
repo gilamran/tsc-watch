@@ -1,5 +1,6 @@
 const { fork } = require('child_process');
-const fs = require('fs');
+const { appendFileSync } = require('fs');
+const { join } = require('path');
 
 const noop = () => {};
 const SUCCESS_FILE_PATH = './tmp/fixtures/passing.ts';
@@ -16,24 +17,31 @@ class Driver {
   }
 
   startWatch({ failFirst, pretty } = {}) {
-    const params = ['--noClear', '--out', './tmp/output.js', failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH];
+    const params = [
+      '--noClear',
+      '--out',
+      './tmp/output.js',
+      failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH,
+    ];
     if (pretty) {
       params.push('--pretty');
     }
-    this.proc = fork('./lib/tsc-watch.js', params, { stdio: 'inherit' });
+    this.proc = fork(join(process.cwd(), 'dist', 'tsc-watch.js'), params, { stdio: 'inherit' });
 
-    this.subscriptions.forEach((handler, evName) => this.proc.on('message', event => (evName === event ? handler(event) : noop())));
+    this.subscriptions.forEach((handler, evName) =>
+      this.proc.on('message', (event) => (evName === event ? handler(event) : noop())),
+    );
 
     return this;
   }
 
   modifyAndSucceedAfter(timeToWait = 0, isFailingPath) {
-    this.wait(timeToWait).then(() => fs.appendFileSync(SUCCESS_FILE_PATH, '\n '));
+    this.wait(timeToWait).then(() => appendFileSync(SUCCESS_FILE_PATH, '\n '));
     return this;
   }
 
   modifyAndFailAfter(timeToWait = 0) {
-    this.wait(timeToWait).then(() => fs.appendFileSync(FAIL_FILE_PATH, '{{{'));
+    this.wait(timeToWait).then(() => appendFileSync(FAIL_FILE_PATH, '{{{'));
     return this;
   }
 
@@ -48,8 +56,9 @@ class Driver {
   }
 
   wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 
-module.exports.driver = new Driver();
+const driver = new Driver();
+module.exports = { driver };

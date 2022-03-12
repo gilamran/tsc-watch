@@ -1,4 +1,4 @@
-const stripAnsi = require('strip-ansi');
+import stripAnsi from 'strip-ansi';
 
 const tscUsageSyntaxRegex = / -w, --watch.*Watch input files\./;
 const typescriptPrettyErrorRegex = /:\d+:\d+ \- error TS\d+: /;
@@ -22,7 +22,7 @@ const newAdditionToSyntax = [
   ' --compiler PATH                                    The PATH will be used instead of typescript compiler. Defaults typescript/bin/tsc.',
 ].join('\n');
 
-function color(line, noClear) {
+function color(line: string, noClear: boolean = false): string {
   // coloring errors:
   line = line.replace(typescriptErrorRegex, m => `\u001B[36m${m}\u001B[39m`); // Cyan
   line = line.replace(typescriptPrettyErrorRegex, m => `\u001B[36m${m}\u001B[39m`); // Cyan
@@ -46,11 +46,11 @@ function color(line, noClear) {
   return line;
 }
 
-function print(noColors, noClear, line) {
-  return console.log(noColors ? line : color(line, noClear));
+export function print(noColors: boolean, noClear: boolean, line: string): void {
+  console.log(noColors ? line : color(line, noClear));
 }
 
-function deleteClear(line) {
+export function deleteClear(line: string): string {
   const buffer = Buffer.from(line);
   if (buffer.length >= 2 && buffer[0] === 0x1b && buffer[1] === 0x63) {
     return line.substr(2);
@@ -58,11 +58,11 @@ function deleteClear(line) {
   return line;
 }
 
-function manipulate(line) {
+export function manipulate(line: string): string {
   return line.replace(tscUsageSyntaxRegex, newAdditionToSyntax);
 }
 
-function detectState(line) {
+export function detectState(line: string) {
   const clearLine = stripAnsi(line);
   const compilationStarted = compilationStartedRegex.test(clearLine);
   const compilationError =
@@ -74,16 +74,9 @@ function detectState(line) {
   const fileEmitted = fileEmittedExec !== null ? fileEmittedExec[2] : null; // if the regex is not null it will return an array with 3 elements
 
   return {
-    compilationStarted: compilationStarted,
-    compilationError: compilationError,
-    compilationComplete: compilationComplete,
-    fileEmitted: fileEmitted,
+    compilationStarted,
+    compilationError,
+    compilationComplete,
+    fileEmitted,
   };
 }
-
-module.exports = {
-  print: print,
-  deleteClear: deleteClear,
-  manipulate: manipulate,
-  detectState: detectState,
-};

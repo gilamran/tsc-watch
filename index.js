@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('./lib/tsc-watch');
+require('./dist/tsc-watch');

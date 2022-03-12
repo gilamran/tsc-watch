@@ -1,1 +1,2 @@
-module.exports = require('./lib/client');
+import { TscWatchClient } from './client';
+export default TscWatchClient;
