@@ -4,8 +4,8 @@
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "clean": "rimraf dist && rimraf types && rimraf tmp",
-    "test": "npm run clean && npm run build && mocha --timeout 10000 src/test/**/*.js",
-    "build": "tsc -p ./src/lib/tsconfig.json"
+    "test": "npm run build && mocha --timeout 10000 src/test/**/*.js",
+    "build": "npm run clean && tsc -p tsconfig.json"
   },
   "bin": {
     "tsc-watch": "index.js"
