@@ -1,6 +1,6 @@
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const waitFor = (action, timeout = 4000) => {
+const waitFor = (action, timeout = 8000) => {
   const startTime = Date.now();
   return new Promise((resolve, reject) => {
     const retry = () => {
