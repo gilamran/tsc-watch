@@ -26,7 +26,7 @@ class Driver {
     if (pretty) {
       params.push('--pretty');
     }
-    this.proc = fork(join(process.cwd(), 'dist', 'tsc-watch.js'), params, { stdio: 'inherit' });
+    this.proc = fork(join(process.cwd(), 'dist', 'lib', 'tsc-watch.js'), params, { stdio: 'inherit' });
 
     this.subscriptions.forEach((handler, evName) =>
       this.proc.on('message', (event) => (evName === event ? handler(event) : noop())),

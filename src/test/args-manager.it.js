@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { extractArgs } = require('../../dist/args-manager');
+const { extractArgs } = require('../../dist/lib/args-manager');
 
 describe('Args Manager', () => {
   it('Should remove the runner args', () => {

@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { detectState } = require('../../dist/stdout-manipulator');
+const { detectState } = require('../../dist/lib/stdout-manipulator');
 
 describe('stdout-manipulator', () => {
     describe('detectState', () => {

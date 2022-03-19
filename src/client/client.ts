@@ -6,7 +6,7 @@ export class TscWatchClient extends EventEmitter {
   private tsc: ChildProcess | undefined;
 
   start(...args: string[]) {
-    const tscWatch = require.resolve(join(process.cwd(), 'dist', 'tsc-watch'));
+    const tscWatch = require.resolve(join(process.cwd(), 'dist', 'lib', 'tsc-watch'));
     this.tsc = fork(tscWatch, args, { stdio: 'inherit' });
     this.tsc.on('message', (msg: string) => {
       this.emit(...deserializeTscMessage(msg));

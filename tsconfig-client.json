@@ -3,8 +3,9 @@
     "target": "es2016",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "outDir": "./dist/lib",
-    "rootDir": "./src/lib",
+    "declaration": true,
+    "outDir": "./dist/client",
+    "rootDir": "./src/client",
     "isolatedModules": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -12,5 +13,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/lib/**/*.ts"]
+  "include": ["src/client/index.ts"]
 }

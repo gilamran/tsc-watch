@@ -5,10 +5,12 @@
   "scripts": {
     "clean": "rimraf dist && rimraf types && rimraf tmp",
     "test": "npm run build && mocha --timeout 10000 src/test/**/*.js",
-    "build": "npm run clean && tsc -p tsconfig.json"
+    "build": "npm run clean && npm run build-lib && npm run build-client",
+    "build-lib": "tsc -p tsconfig.json",
+    "build-client": "tsc -p tsconfig-client.json"
   },
   "bin": {
-    "tsc-watch": "index.js"
+    "tsc-watch": "dist/lib/tsc-watch.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,8 @@
   "keywords": [
     "TypeScript"
   ],
-  "exports": "./index.js",
-  "types": "types/client.d.ts",
+  "main": "./dist/client/index.js",
+  "types": "./dist/client/index.d.ts",
   "engines": {
     "node": ">=12.12.0"
   },
