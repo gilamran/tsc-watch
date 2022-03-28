@@ -1,13 +1,16 @@
-import { fork, ChildProcess } from 'child_process';
+import { ChildProcess, fork, ForkOptions } from 'child_process';
 import { EventEmitter } from 'events';
-import { join } from 'path';
 
 export class TscWatchClient extends EventEmitter {
   private tsc: ChildProcess | undefined;
 
+  constructor(private tscWatchPath: string = require.resolve('tsc-watch')) {
+    super();
+  }
+
   start(...args: string[]) {
-    const tscWatch = require.resolve(join(__dirname, 'dist', 'lib', 'tsc-watch'));
-    this.tsc = fork(tscWatch, args, { stdio: 'inherit' });
+    const options: ForkOptions = { stdio: 'inherit' };
+    this.tsc = fork(this.tscWatchPath, args, options);
     this.tsc.on('message', (msg: string) => {
       this.emit(...deserializeTscMessage(msg));
     });

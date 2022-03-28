@@ -1,14 +1,19 @@
-import stripAnsi from 'strip-ansi';
-
+const ANSI_REGEX = new RegExp('[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))', 'g');
+const stripAnsi = (str: string) => str.replace(ANSI_REGEX, '');
+  
+  
 const tscUsageSyntaxRegex = / -w, --watch.*Watch input files\./;
 const typescriptPrettyErrorRegex = /:\d+:\d+ \- error TS\d+: /;
 const typescriptErrorRegex = /\(\d+,\d+\): error TS\d+: /;
 const typescriptEmittedFileRegex = /(TSFILE:)\s*(.*)/;
 
-const compilationCompleteWithErrorRegex = / Found [^0][0-9]* error[s]?\. Watching for file changes\./;
+const compilationCompleteWithErrorRegex =
+  / Found [^0][0-9]* error[s]?\. Watching for file changes\./;
 const compilationCompleteWithoutErrorRegex = / Found 0 errors\. Watching for file changes\./;
-const compilationCompleteRegex = /( Compilation complete\. Watching for file changes\.| Found \d+ error[s]?\. Watching for file changes\.)/;
-const compilationStartedRegex = /( Starting compilation in watch mode\.\.\.| File change detected\. Starting incremental compilation\.\.\.)/;
+const compilationCompleteRegex =
+  /( Compilation complete\. Watching for file changes\.| Found \d+ error[s]?\. Watching for file changes\.)/;
+const compilationStartedRegex =
+  /( Starting compilation in watch mode\.\.\.| File change detected\. Starting incremental compilation\.\.\.)/;
 
 const newAdditionToSyntax = [
   ' -w, --watch                                        Watch input files. [always on]',
@@ -24,20 +29,23 @@ const newAdditionToSyntax = [
 
 function color(line: string, noClear: boolean = false): string {
   // coloring errors:
-  line = line.replace(typescriptErrorRegex, m => `\u001B[36m${m}\u001B[39m`); // Cyan
-  line = line.replace(typescriptPrettyErrorRegex, m => `\u001B[36m${m}\u001B[39m`); // Cyan
+  line = line.replace(typescriptErrorRegex, (m) => `\u001B[36m${m}\u001B[39m`); // Cyan
+  line = line.replace(typescriptPrettyErrorRegex, (m) => `\u001B[36m${m}\u001B[39m`); // Cyan
 
   // completed with error:
-  line = line.replace(compilationCompleteWithErrorRegex, m => `\u001B[31m${m}\u001B[39m`); // Red
+  line = line.replace(compilationCompleteWithErrorRegex, (m) => `\u001B[31m${m}\u001B[39m`); // Red
 
   // completed without error:
-  line = line.replace(compilationCompleteWithoutErrorRegex, m => `\u001B[32m${m}\u001B[39m`); // Green
+  line = line.replace(compilationCompleteWithoutErrorRegex, (m) => `\u001B[32m${m}\u001B[39m`); // Green
 
   // usage
-  line = line.replace(tscUsageSyntaxRegex, m => `\u001B[33m${m}\u001B[39m`); // Yellow
+  line = line.replace(tscUsageSyntaxRegex, (m) => `\u001B[33m${m}\u001B[39m`); // Yellow
 
   // file emitted
-  line = line.replace(typescriptEmittedFileRegex, (_0, stdPrefix, file) => `\u001B[30m\u001B[4m${stdPrefix}\u001B[0m \u001B[30m${file}\u001B[0m`); // Grey underlined / Grey
+  line = line.replace(
+    typescriptEmittedFileRegex,
+    (_0, stdPrefix, file) => `\u001B[30m\u001B[4m${stdPrefix}\u001B[0m \u001B[30m${file}\u001B[0m`,
+  ); // Grey underlined / Grey
 
   if (noClear && compilationStartedRegex.test(line)) {
     return '\n\n----------------------\n' + line;
