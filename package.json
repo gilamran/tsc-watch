@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
-    "clean": "rimraf dist && rimraf types && rimraf tmp",
+    "clean": "rimraf dist && rimraf tmp",
     "test": "npm run build && mocha --timeout 10000 src/test/**/*.js",
     "build": "npm run clean && npm run build-lib && npm run build-client",
     "build-lib": "tsc -p tsconfig.json",
