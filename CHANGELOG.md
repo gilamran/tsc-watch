@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v5.0.1 - 03/04/2022
+
+- bumped to version 5.0.1 to prevent dev version as the latest version
+
 ## v4.6.2 - 10/01/2022
 
 - Added `file_emitted` signal support when `--listEmittedFiles` is used [issue](https://github.com/gilamran/tsc-watch/issues/138)
