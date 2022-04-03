@@ -7,7 +7,8 @@
     "test": "npm run build && jest --verbose --runInBand",
     "build": "npm run clean && npm run build-lib && npm run build-client",
     "build-lib": "tsc -p tsconfig.json",
-    "build-client": "tsc -p tsconfig-client.json"
+    "build-client": "tsc -p tsconfig-client.json",
+    "watch-lib": "tsc -p tsconfig.json --watch"
   },
   "bin": {
     "tsc-watch": "dist/lib/tsc-watch.js"
