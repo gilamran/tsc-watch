@@ -13,6 +13,7 @@
   "bin": {
     "tsc-watch": "dist/lib/tsc-watch.js"
   },
+  "files": ["dist", "index.js"],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/gilamran/tsc-watch.git"
