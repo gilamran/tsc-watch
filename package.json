@@ -1,6 +1,6 @@
 {
   "name": "tsc-watch",
-  "version": "5.0.0-dev.20200403",
+  "version": "6.0.0-dev.0",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "clean": "rimraf dist && rimraf tmp",
@@ -13,7 +13,10 @@
   "bin": {
     "tsc-watch": "dist/lib/tsc-watch.js"
   },
-  "files": ["dist", "index.js"],
+  "files": [
+    "dist",
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/gilamran/tsc-watch.git"
