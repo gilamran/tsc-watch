@@ -17,7 +17,7 @@ export class TscWatchClient extends EventEmitter {
     this.tsc.on('message', (msg: string) => {
       this.emit(...deserializeTscMessage(msg));
     });
-    this.tsc.on('exit', (code: number, signal: number) => {
+    this.tsc.on('exit', (code: number, signal: string) => {
       this.emit('exit', code, signal);
     });
   }
