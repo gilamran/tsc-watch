@@ -1,7 +1,7 @@
 const ANSI_REGEX = new RegExp('[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))', 'g');
 const stripAnsi = (str: string) => str.replace(ANSI_REGEX, '');
-  
-  
+
+
 const tscUsageSyntaxRegex = / -w, --watch.*Watch input files\./;
 const typescriptPrettyErrorRegex = /:\d+:\d+ \- error TS\d+: /;
 const typescriptErrorRegex = /\(\d+,\d+\): error TS\d+: /;
@@ -54,7 +54,10 @@ function color(line: string, noClear: boolean = false): string {
   return line;
 }
 
-export function print(noColors: boolean, noClear: boolean, line: string): void {
+export function print(noColors: boolean, noClear: boolean, line: string, signalEmittedFiles: boolean): void {
+  const outputLine = noColors ? line : color(line, noClear);
+  if (signalEmittedFiles && outputLine.startsWith('TSFILE:')) { return; }
+
   console.log(noColors ? line : color(line, noClear));
 }
 

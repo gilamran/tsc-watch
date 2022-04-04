@@ -1,4 +1,4 @@
-import { detectState } from '../lib/stdout-manipulator';
+import { detectState, print } from '../lib/stdout-manipulator';
 
 describe('stdout-manipulator', () => {
     describe('detectState', () => {
@@ -43,5 +43,31 @@ describe('stdout-manipulator', () => {
                 expect(fileEmitted).toEqual('/my/dist/hello.js');
             });
         })
+    });
+
+    describe('print', () => {
+        let forkSpy: any;
+        beforeEach(() => {
+            forkSpy = jest.spyOn(global.console, 'log').mockImplementation();
+        });
+
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it('Should log raw line with default params', async () => {
+            print(true, true, 'raw tsc line', false);
+            expect(forkSpy.mock.calls).toEqual([['raw tsc line']])
+        });
+
+        it('Should hide a TSFILE line when signalEmittedFiles is true', async () => {
+            print(true, true, 'TSFILE: /home/emitted/file.js', true);
+            expect(forkSpy.mock.calls).toEqual([])
+        });
+
+        it('Should not hide a normal line when signalEmittedFiles is true', async () => {
+            print(true, true, 'any other line', true);
+            expect(forkSpy.mock.calls).toEqual([['any other line']])
+        });
     });
 });
