@@ -54,6 +54,7 @@ export function extractArgs(inputArgs: string[]) {
   const noColors = extractCommand(args, '--noColors');
   const noClear = extractCommand(args, '--noClear');
   const silent = extractCommand(args, '--silent');
+  const signalEmittedFiles = extractCommand(args, '--signalEmittedFiles');
   let compiler = extractCommandWithValue(args, '--compiler');
   if (!compiler) {
     compiler = 'typescript/bin/tsc';
@@ -70,6 +71,7 @@ export function extractArgs(inputArgs: string[]) {
     maxNodeMem,
     noColors,
     noClear,
+    signalEmittedFiles,
     silent,
     compiler,
     args,

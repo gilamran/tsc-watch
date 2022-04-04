@@ -115,6 +115,11 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '--silent', '1.ts']).silent).toBe(true);
   });
 
+  it('Should return the signalEmittedFiles', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).signalEmittedFiles).toBe(false);
+    expect(extractArgs(['node', 'tsc-watch.js', '--signalEmittedFiles', '1.ts']).signalEmittedFiles).toBe(true);
+  });
+
   it('Should return the compiler', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).compiler).toBe('typescript/bin/tsc');
     expect(
