@@ -1,6 +1,6 @@
 {
   "name": "tsc-watch",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "test": "mocha --timeout 10000 test/**/*.js"
