@@ -107,8 +107,11 @@ function echoExit(code: number | null, signal: string | null) {
 
 let compilationErrorSinceStart = false;
 const tscProcess = spawnTsc({ maxNodeMem }, args);
-if (!tscProcess.stderr || !tscProcess.stdout) {
+if (!tscProcess.stdout) {
   throw new Error('Unable to read Typescript stdout');
+}
+if (!tscProcess.stderr) {
+  throw new Error('Unable to read Typescript stderr');
 }
 
 tscProcess.on('exit', echoExit);
