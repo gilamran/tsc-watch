@@ -56,17 +56,17 @@ describe('stdout-manipulator', () => {
         });
 
         it('Should log raw line with default params', async () => {
-            print(true, true, 'raw tsc line', false);
+            print('raw tsc line');
             expect(forkSpy.mock.calls).toEqual([['raw tsc line']])
         });
 
         it('Should hide a TSFILE line when signalEmittedFiles is true', async () => {
-            print(true, true, 'TSFILE: /home/emitted/file.js', true);
+            print('TSFILE: /home/emitted/file.js', { signalEmittedFiles: true });
             expect(forkSpy.mock.calls).toEqual([])
         });
 
         it('Should not hide a normal line when signalEmittedFiles is true', async () => {
-            print(true, true, 'any other line', true);
+            print('any other line', { signalEmittedFiles: true });
             expect(forkSpy.mock.calls).toEqual([['any other line']])
         });
     });

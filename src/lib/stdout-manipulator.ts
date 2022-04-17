@@ -54,9 +54,22 @@ function color(line: string, noClear: boolean = false): string {
   return line;
 }
 
-export function print(noColors: boolean, noClear: boolean, line: string, signalEmittedFiles: boolean): void {
-  const outputLine = noColors ? line : color(line, noClear);
-  if (signalEmittedFiles && outputLine.startsWith('TSFILE:')) { return; }
+type PrintParams = {
+  noColors?: boolean;
+  noClear?: boolean;
+  signalEmittedFiles?: boolean;
+};
+
+export function print(
+    line: string,
+    {
+      noColors = false,
+      noClear = false,
+      signalEmittedFiles = false
+    }: PrintParams = {}): void {
+  if (signalEmittedFiles && line.startsWith('TSFILE:')) {
+    return;
+  }
 
   console.log(noColors ? line : color(line, noClear));
 }

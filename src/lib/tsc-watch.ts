@@ -119,7 +119,7 @@ rl.on('line', function (input) {
 
   const line = manipulate(input);
   if (!silent) {
-    print(noColors, noClear, line, signalEmittedFiles);
+    print(line, { noColors, noClear, signalEmittedFiles });
   }
   const state = detectState(line);
   const compilationStarted = state.compilationStarted;
