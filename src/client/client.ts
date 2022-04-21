@@ -2,7 +2,7 @@ import * as path from 'path';
 import { ChildProcess, fork, ForkOptions } from 'child_process';
 import { EventEmitter } from 'events';
 
-const tscWatchLibPath = require.resolve(path.resolve(__dirname, '..', 'lib', 'tsc-watch'));
+const tscWatchLibPath = path.join(__dirname, '..', 'lib', 'tsc-watch');
 
 export class TscWatchClient extends EventEmitter {
   private tsc: ChildProcess | undefined;
