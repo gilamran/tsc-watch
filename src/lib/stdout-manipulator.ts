@@ -54,7 +54,7 @@ function color(line: string, noClear: boolean = false): string {
   return line;
 }
 
-type PrintParams = {
+type TPrintParams = {
   noColors?: boolean;
   noClear?: boolean;
   signalEmittedFiles?: boolean;
@@ -66,7 +66,7 @@ export function print(
       noColors = false,
       noClear = false,
       signalEmittedFiles = false
-    }: PrintParams = {}): void {
+    }: TPrintParams = {}): void {
   if (signalEmittedFiles && line.startsWith('TSFILE:')) {
     return;
   }
