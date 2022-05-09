@@ -120,8 +120,9 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '--signalEmittedFiles', '1.ts']).signalEmittedFiles).toBe(true);
   });
 
-  it('Should not return conflicting signalEmittedFiles if --listEmittedFiles is specifically flagged', () => {
-    expect(extractArgs(['node', 'tsc-watch.js', '--signalEmittedFiles', '--listEmittedFiles', '1.ts']).signalEmittedFiles).toBe(false);
+  it('Should return requestedToListEmittedFiles when tsc native listEmittedFiles is set', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).requestedToListEmittedFiles).toBe(false);
+    expect(extractArgs(['node', 'tsc-watch.js', '--listEmittedFiles', '1.ts']).requestedToListEmittedFiles).toBe(true);
   });
 
   it('Should return the compiler', () => {

@@ -24,6 +24,7 @@ const {
   maxNodeMem,
   noColors,
   noClear,
+  requestedToListEmittedFiles,
   signalEmittedFiles,
   silent,
   compiler,
@@ -85,15 +86,16 @@ function getTscPath(): string {
 
 interface INodeSettings {
   maxNodeMem: string | null;
+  requestedToListEmittedFiles: boolean;
   signalEmittedFiles: boolean;
 }
 
-function spawnTsc({ maxNodeMem, signalEmittedFiles }: INodeSettings, args: string[]): ChildProcess {
+function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }: INodeSettings, args: string[]): ChildProcess {
   const nodeArgs = [];
   if (maxNodeMem) {
     nodeArgs.push(`--max_old_space_size=${maxNodeMem}`);
   }
-  if (signalEmittedFiles) {
+  if (signalEmittedFiles && !requestedToListEmittedFiles) {
     nodeArgs.push(`--listEmittedFiles`);
   }
 
@@ -105,7 +107,7 @@ function spawnTsc({ maxNodeMem, signalEmittedFiles }: INodeSettings, args: strin
 }
 
 let compilationErrorSinceStart = false;
-const tscProcess = spawnTsc({ maxNodeMem, signalEmittedFiles }, args);
+const tscProcess = spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }, args);
 if (!tscProcess.stdout) {
   throw new Error('Unable to read Typescript stdout');
 }
@@ -119,7 +121,7 @@ rl.on('line', function (input) {
 
   const line = manipulate(input);
   if (!silent) {
-    print(line, { noColors, noClear, signalEmittedFiles });
+    print(line, { noColors, noClear, signalEmittedFiles, requestedToListEmittedFiles });
   }
   const state = detectState(line);
   const compilationStarted = state.compilationStarted;
