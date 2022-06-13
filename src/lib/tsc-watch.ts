@@ -99,11 +99,23 @@ function spawnTsc({ maxNodeMem }: INodeSettings, args: string[]): ChildProcess {
   return spawn('node', nodeArgs);
 }
 
+function echoExit(code: number | null, signal: string | null) {
+  if (signal !== null) {
+    process.kill(process.pid, signal);
+  }
+}
+
 let compilationErrorSinceStart = false;
 const tscProcess = spawnTsc({ maxNodeMem }, args);
 if (!tscProcess.stdout) {
   throw new Error('Unable to read Typescript stdout');
 }
+if (!tscProcess.stderr) {
+  throw new Error('Unable to read Typescript stderr');
+}
+
+tscProcess.on('exit', echoExit);
+tscProcess.stderr.pipe(process.stderr);
 
 const rl = createInterface({ input: tscProcess.stdout });
 
@@ -199,7 +211,7 @@ const sendSignal = (msg: string) => {
   if (process.send) {
     process.send(msg);
   }
-}
+};
 
 const Signal = {
   emitStarted: () => sendSignal('started'),

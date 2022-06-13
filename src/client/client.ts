@@ -1,10 +1,13 @@
+import * as path from 'path';
 import { ChildProcess, fork, ForkOptions } from 'child_process';
 import { EventEmitter } from 'events';
+
+const tscWatchLibPath = path.join(__dirname, '..', 'lib', 'tsc-watch');
 
 export class TscWatchClient extends EventEmitter {
   private tsc: ChildProcess | undefined;
 
-  constructor(private tscWatchPath: string = require.resolve('tsc-watch')) {
+  constructor(private tscWatchPath = tscWatchLibPath) {
     super();
   }
 
@@ -14,7 +17,7 @@ export class TscWatchClient extends EventEmitter {
     this.tsc.on('message', (msg: string) => {
       this.emit(...deserializeTscMessage(msg));
     });
-    this.tsc.on('exit', (code: number, signal: number) => {
+    this.tsc.on('exit', (code: number, signal: string) => {
       this.emit('exit', code, signal);
     });
   }
