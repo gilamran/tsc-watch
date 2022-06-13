@@ -1,4 +1,4 @@
-import { detectState } from '../lib/stdout-manipulator';
+import { detectState, print } from '../lib/stdout-manipulator';
 
 describe('stdout-manipulator', () => {
     describe('detectState', () => {
@@ -43,5 +43,38 @@ describe('stdout-manipulator', () => {
                 expect(fileEmitted).toEqual('/my/dist/hello.js');
             });
         })
+    });
+
+    describe('print', () => {
+        let forkSpy: any;
+        beforeEach(() => {
+            forkSpy = jest.spyOn(global.console, 'log').mockImplementation();
+        });
+
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+
+        it('Should log raw line with default params', async () => {
+            print('raw tsc line');
+            expect(forkSpy.mock.calls).toEqual([['raw tsc line']])
+        });
+
+        it('Should not hide a normal line when signalEmittedFiles is true', async () => {
+            print('any other line', { signalEmittedFiles: true });
+            expect(forkSpy.mock.calls).toEqual([['any other line']])
+        });
+
+        describe("TSFILE support", () => {
+            it('Should hide a TSFILE line when signalEmittedFiles is true', async () => {
+                print('TSFILE: /home/emitted/file.js', { signalEmittedFiles: true });
+                expect(forkSpy.mock.calls).toEqual([])
+            });
+
+            it('Should not hide a TSFILE line when signalEmittedFiles is true and native --listEmittedFiles (requestedToListEmittedFiles) is true', async () => {
+                print('TSFILE: /home/emitted/file.js', { noColors: true, signalEmittedFiles: true, requestedToListEmittedFiles: true });
+                expect(forkSpy.mock.calls).toEqual([['TSFILE: /home/emitted/file.js']])
+            });
+        });
     });
 });
