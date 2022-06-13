@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.0.0 - 13/06/2022
+- added signalEmittedFiles, thanks to @pp0rtal
+
 ## v5.0.0 - 12/03/2022
 - Converted to Typescript
 
