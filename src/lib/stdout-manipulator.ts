@@ -41,12 +41,6 @@ function color(line: string, noClear: boolean = false): string {
   // usage
   line = line.replace(tscUsageSyntaxRegex, (m) => `\u001B[33m${m}\u001B[39m`); // Yellow
 
-  // file emitted
-  line = line.replace(
-    typescriptEmittedFileRegex,
-    (_0, stdPrefix, file) => `\u001B[30m\u001B[4m${stdPrefix}\u001B[0m \u001B[30m${file}\u001B[0m`,
-  ); // Grey underlined / Grey
-
   if (noClear && compilationStartedRegex.test(line)) {
     return '\n\n----------------------\n' + line;
   }
