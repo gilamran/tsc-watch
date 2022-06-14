@@ -15,7 +15,9 @@
   },
   "files": [
     "dist/**/*",
-    "index.js"
+    "index.js",
+    "client.js",
+    "client.d.ts"
   ],
   "repository": {
     "type": "git",
