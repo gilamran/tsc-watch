@@ -91,18 +91,14 @@ interface INodeSettings {
 }
 
 function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }: INodeSettings, args: string[]): ChildProcess {
-  const nodeArgs = [];
-  if (maxNodeMem) {
-    nodeArgs.push(`--max_old_space_size=${maxNodeMem}`);
-  }
-  if (signalEmittedFiles && !requestedToListEmittedFiles) {
-    nodeArgs.push(`--listEmittedFiles`);
-  }
-
   const tscBin = getTscPath();
-  nodeArgs.push(tscBin);
+  const nodeArgs = [
+    ...((maxNodeMem) ? [`--max_old_space_size=${maxNodeMem}`] : []),
+    tscBin,
+    ...((signalEmittedFiles || requestedToListEmittedFiles) ? ['--listEmittedFiles'] : []),
+    ...args
+  ];
 
-  nodeArgs.push(...args);
   return spawn('node', nodeArgs);
 }
 
