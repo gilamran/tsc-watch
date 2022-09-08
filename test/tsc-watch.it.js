@@ -44,4 +44,28 @@ describe('TSC-Watch child process messages', () => {
     await driver.wait(3000);
     expect(listener.callCount).to.be.equal(1);
   });
+
+  it('Should not start extra onSuccess commands when previous ones are slow to die (gilamran/tsc-watch#87)', async () => {
+    const findProcess = require('find-process');
+
+    driver.startWatch({ command: 'unkillable-command' });
+    await driver.wait(3000);
+
+    const [ unkillable ] = await findProcess('name', 'unkillable-command.js', true);
+
+    // Trigger a new onSuccess command, but don't allow the first one to die just yet.
+    driver.modifyAndSucceedAfter(0);
+    await driver.wait(3000);
+
+    // Try to trigger *another* new onSuccess command while still waiting for the first one to die.
+    driver.modifyAndSucceedAfter(0);
+    await driver.wait(3000);
+
+    // Finally let the old first onSuccess command die.
+    process.kill(unkillable.pid, 'SIGKILL');
+    await driver.wait(100);
+
+    // There should only be one onSuccess command running (the one triggered by the final successful compile).
+    expect(await findProcess('name', 'unkillable-command.js', true)).to.have.length(1);
+  });
 });

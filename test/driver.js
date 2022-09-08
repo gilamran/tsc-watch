@@ -15,10 +15,15 @@ class Driver {
     return this;
   }
 
-  startWatch({ failFirst, pretty } = {}) {
+  startWatch({ failFirst, pretty, command } = {}) {
     const params = ['--noClear', '--out', './tmp/output.js', failFirst ? FAIL_FILE_PATH : SUCCESS_FILE_PATH];
     if (pretty) {
       params.push('--pretty');
+    }
+    if (command === 'unkillable-command')
+    {
+      params.push('--onSuccess');
+      params.push(`${process.execPath} ./test-commands/unkillable-command.js`);
     }
     this.proc = fork('./lib/tsc-watch.js', params, { stdio: 'inherit' });
 
