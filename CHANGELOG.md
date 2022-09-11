@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.0.0-dev.4 - 12/09/2022
+- killing processes once, and waiting for them to complete before starting a new one
+
 ## v6.0.0 - 13/06/2022
 - added signalEmittedFiles, thanks to @pp0rtal
 

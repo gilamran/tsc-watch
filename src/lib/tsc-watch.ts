@@ -31,14 +31,44 @@ const {
   args,
 } = extractArgs(process.argv);
 
-function killProcesses(killAll: boolean): Promise<any> {
-  return Promise.all([
-    killAll && firstSuccessKiller ? firstSuccessKiller() : null,
-    successKiller ? successKiller() : null,
-    failureKiller ? failureKiller() : null,
-    compilationStartedKiller ? compilationStartedKiller() : null,
-    compilationCompleteKiller ? compilationCompleteKiller() : null,
-  ]);
+let runningKillProcessesPromise: Promise<number> | null = null;
+function killProcesses(currentCompilationId: number, killAll: boolean): Promise<number> {
+  if (runningKillProcessesPromise) {
+    return runningKillProcessesPromise.then(() => currentCompilationId);
+  }
+
+  const promisesToWaitFor: Promise<any>[] = [];
+  if (killAll && firstSuccessKiller) {
+    promisesToWaitFor.push(firstSuccessKiller());
+    firstSuccessKiller = null;
+  }
+
+  if (successKiller) {
+    promisesToWaitFor.push(successKiller());
+    successKiller = null;
+  }
+
+  if (failureKiller) {
+    promisesToWaitFor.push(failureKiller());
+    failureKiller = null;
+  }
+
+  if (compilationStartedKiller)   {
+    promisesToWaitFor.push(compilationStartedKiller());
+    compilationStartedKiller = null;
+  }
+
+  if (compilationCompleteKiller) {
+    promisesToWaitFor.push(compilationCompleteKiller());
+    compilationCompleteKiller = null;
+  }
+
+  runningKillProcessesPromise = Promise.all(promisesToWaitFor).then(() => {
+    runningKillProcessesPromise = null;
+    return currentCompilationId;
+  });
+
+  return runningKillProcessesPromise;
 }
 
 function runOnCompilationStarted(): void {
@@ -122,6 +152,7 @@ tscProcess.stderr.pipe(process.stderr);
 
 const rl = createInterface({ input: tscProcess.stdout });
 
+let compilationId = 0;
 rl.on('line', function (input) {
   if (noClear) {
     input = deleteClear(input);
@@ -144,14 +175,22 @@ rl.on('line', function (input) {
   }
 
   if (compilationStarted) {
-    killProcesses(false).then(() => {
+    compilationId++;
+    killProcesses(compilationId, false).then((previousCompilationId) => {
+      if (previousCompilationId !== compilationId) {
+        return;
+      }
       runOnCompilationStarted();
       Signal.emitStarted();
     });
   }
-
+  
   if (compilationComplete) {
-    killProcesses(false).then(() => {
+    compilationId++;
+    killProcesses(compilationId, false).then((previousCompilationId) => {
+      if (previousCompilationId !== compilationId) {
+        return;
+      }
       runOnCompilationComplete();
 
       if (compilationErrorSinceStart) {
@@ -228,7 +267,7 @@ nodeCleanup((_exitCode: number | null, signal: string | null) => {
   if (signal) {
     tscProcess.kill(signal);
   }
-  killProcesses(true).then(() => process.exit());
+  killProcesses(0, true).then(() => process.exit());
   // don't call cleanup handler again
   uninstall();
   return false;
