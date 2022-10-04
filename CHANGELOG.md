@@ -8,6 +8,17 @@
 
 ## v5.0.0 - 12/03/2022
 - Converted to Typescript
+## v5.0.3 - 07/04/2022
+
+- Fixed DOS line endings [issue](https://github.com/gilamran/tsc-watch/issues/149)) thanks to @sluukkonen
+
+## v5.0.2 - 03/04/2022
+
+- Fixed black on black issue (Thanks to @bonjourjoel for the [issue](https://github.com/gilamran/tsc-watch/issues/142))
+
+## v5.0.1 - 03/04/2022
+
+- bumped to version 5.0.1 to prevent dev version as the latest version
 
 ## v4.6.2 - 10/01/2022
 

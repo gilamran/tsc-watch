@@ -1,6 +1,8 @@
-const ANSI_REGEX = new RegExp('[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))', 'g');
+const ANSI_REGEX = new RegExp(
+  '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))',
+  'g',
+);
 const stripAnsi = (str: string) => str.replace(ANSI_REGEX, '');
-
 
 const tscUsageSyntaxRegex = / -w, --watch.*Watch input files\./;
 const typescriptPrettyErrorRegex = /:\d+:\d+ \- error TS\d+: /;
@@ -56,13 +58,14 @@ type TPrintParams = {
 };
 
 export function print(
-    line: string,
-    {
-      noColors = false,
-      noClear = false,
-      requestedToListEmittedFiles = false,
-      signalEmittedFiles = false,
-    }: TPrintParams = {}): void {
+  line: string,
+  {
+    noColors = false,
+    noClear = false,
+    requestedToListEmittedFiles = false,
+    signalEmittedFiles = false,
+  }: TPrintParams = {},
+): void {
   if (signalEmittedFiles && !requestedToListEmittedFiles && line.startsWith('TSFILE:')) {
     return;
   }
