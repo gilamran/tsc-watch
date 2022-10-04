@@ -3,7 +3,7 @@ import { join } from 'path';
 
 export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const waitFor = (action: Function, timeout = 8000) => {
+export const waitFor = (action: Function, timeout = 30000) => {
   const startTime = Date.now();
   return new Promise<void>((resolve, reject) => {
     const retry = () => {
