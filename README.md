@@ -4,7 +4,8 @@
 
 `tsc-watch` starts the installed TypeScript compiler (`tsc`) with `--watch` parameter, with the ability to react to compilation status.
 `tsc-watch` was created to allow an easy dev process with TypeScript. Commonly used to restart a node server, similar to nodemon but for TypeScript.
-Anything that you can do with `tsc` you can do with `tsc-watch`, the only difference is that `tsc-watch` can react to compilation status.
+
+**Anything that you can do with `tsc` you can do with `tsc-watch`, the only difference is that `tsc-watch` can react to compilation status.**
 
 | Argument | Description |
 |-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
