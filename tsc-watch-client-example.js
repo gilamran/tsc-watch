@@ -1,5 +1,6 @@
 const readline = require('readline');
-const TscWatchClient = require('./client');
+const { TscWatchClient } = require('./client');
+
 const client = new TscWatchClient();
 
 client.on('started', () => {
