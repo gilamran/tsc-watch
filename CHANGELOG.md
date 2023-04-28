@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.0.1 - 28/04/2023
+- Upgraded to the latest versions of dev dependencies
+- fixed failing test on node 18
+
 ## v6.0.0 - 12/09/2022
 - killing processes once, and waiting for them to complete before starting a new one
 - added signalEmittedFiles, thanks to @pp0rtal
