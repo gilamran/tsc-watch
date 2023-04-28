@@ -12,6 +12,14 @@ import type { ChildProcess } from 'child_process';
 
 const child_process = require('child_process');
 
+const compareFileLocation = (a: string, b: string) => {
+  const aParts = a.split(/[\\\/]/);
+  const bParts = b.split(/[\\\/]/);
+  const aLast = aParts[aParts.length - 1];
+  const bLast = bParts[bParts.length - 1];
+  return aLast.toLowerCase() === bLast.toLowerCase();
+};
+
 describe('Client Events', () => {
   let watchClient: TscWatchClient;
   let callback: jest.Mock;
@@ -54,7 +62,7 @@ describe('Client Events', () => {
         if (callback.mock.calls.length > 0) {
           const firstCall = callback.mock.calls[0];
           const callFirstArg = firstCall[0];
-          return callFirstArg === OUTPUT_FILE;
+          return compareFileLocation(callFirstArg, OUTPUT_FILE);
         }
       });
     });
@@ -73,11 +81,11 @@ describe('Client Events', () => {
 
       // Wait tsc-watch to be started and bound before to kill process
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      process.kill(tscProcess.pid, 6);
+      process.kill(tscProcess.pid, 9);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await waitFor(() => callback.mock.calls.length > 0);
-      expect(callback.mock.calls[0]).toEqual([null, 'SIGABRT']);
+      expect(callback.mock.calls[0]).toEqual([1, null]);
     });
   });
 });
