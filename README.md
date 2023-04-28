@@ -7,27 +7,27 @@
 
 **Anything that you can do with `tsc` you can do with `tsc-watch`, the only difference is that `tsc-watch` can react to compilation status.**
 
-| Argument | Description |
-|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| `--onSuccess COMMAND` | Executes `COMMAND` on **every successful** compilation. |
-| `--onFirstSuccess COMMAND` | Executes `COMMAND` on the **first successful** compilation. |
-| `--onFailure COMMAND` | Executes `COMMAND` on **every failed** compilation. |
-| `--onCompilationStarted COMMAND` | Executes `COMMAND` on **every compilation start** event (initial and incremental). |
-| `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation. |
-| `--maxNodeMem` | Calls `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory. |
-| `--noColors` | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that. |
-| `--noClear` | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that. |
-| `--signalEmittedFiles` | Will run `tsc` compiler with `--listEmittedFiles`, but hiding TSFILE lines. Use it to enable `file_emitted` event, while keeping tsc stdout silent. |
-| `--silent` | Do not print any messages on stdout. |
-| `--compiler PATH` | The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc` |
+| Argument                          | Description                                                                                                                                         |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--onSuccess COMMAND`             | Executes `COMMAND` on **every successful** compilation.                                                                                             |
+| `--onFirstSuccess COMMAND`        | Executes `COMMAND` on the **first successful** compilation.                                                                                         |
+| `--onFailure COMMAND`             | Executes `COMMAND` on **every failed** compilation.                                                                                                 |
+| `--onCompilationStarted COMMAND`  | Executes `COMMAND` on **every compilation start** event (initial and incremental).                                                                  |
+| `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation.                                                                                   |
+| `--maxNodeMem`                    | Calls `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory.                                           |
+| `--noColors`                      | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that.                 |
+| `--noClear`                       | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that.                                           |
+| `--signalEmittedFiles`            | Will run `tsc` compiler with `--listEmittedFiles`, but hiding TSFILE lines. Use it to enable `file_emitted` event, while keeping tsc stdout silent. |
+| `--silent`                        | Do not print any messages on stdout.                                                                                                                |
+| `--compiler PATH`                 | The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc`                                                          |
 
 Notes:
 
-* That all the above `COMMAND`s will be killed on process exit. (Using `SIGTERM`)
-  
-* A `COMMAND` is a single command and not multi command like `script1.sh && script2.sh`
-  
-* Any child process (`COMMAND`) will be terminated before creating a new one.
+- That all the above `COMMAND`s will be killed on process exit. (Using `SIGTERM`)
+
+- A `COMMAND` is a single command and not multi command like `script1.sh && script2.sh`
+
+- Any child process (`COMMAND`) will be terminated before creating a new one.
 
 ## Install
 
@@ -59,6 +59,7 @@ tsc-watch --onSuccess "node ./dist/server.js" --compiler my-typescript/bin/tsc
 ```
 
 ### From npm script
+
 ```
 "dev-server": "tsc-watch --noClear -p ./src/tsconfig.json --onSuccess \"node ./dist/server.js\"",
 ```
@@ -82,7 +83,11 @@ To kill the client, run `watch.kill()`
 Example usage:
 
 ```javascript
-const TscWatchClient = require('tsc-watch/client');
+// Using CommonJS:
+const { TscWatchClient } = require('tsc-watch/client');
+// Using ES6 import:
+import { TscWatchClient } from 'tsc-watch/client';
+
 const watch = new TscWatchClient();
 
 watch.on('started', () => {
