@@ -1,6 +1,6 @@
 # @gilamran/tsc-watch CHANGELOG
 
-## v6.0.2 - 28/04/2023
+## v6.0.3 - 29/04/2023
 - Fixed (Again CRLF to LF)
 
 ## v6.0.1 - 28/04/2023
