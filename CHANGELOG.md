@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.0.2 - 28/04/2023
+- Fixed (Again CRLF to LF)
+
 ## v6.0.1 - 28/04/2023
 - Upgraded to the latest versions of dev dependencies
 - fixed failing test on node 18
