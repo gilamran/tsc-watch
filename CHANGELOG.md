@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.0.4 - 29/04/2023
+- Automate CRLF to LF conversion 
+
 ## v6.0.3 - 29/04/2023
 - Fixed (Again CRLF to LF)
 
