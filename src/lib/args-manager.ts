@@ -56,6 +56,7 @@ export function extractArgs(inputArgs: string[]) {
   const silent = extractCommand(args, '--silent');
   const signalEmittedFiles = extractCommand(args, '--signalEmittedFiles');
   const requestedToListEmittedFiles = extractCommand(args, '--listEmittedFiles');
+  const buildMode = extractCommand(args, '--build') || extractCommand(args, '--b');
   let compiler = extractCommandWithValue(args, '--compiler');
   if (!compiler) {
     compiler = 'typescript/bin/tsc';
@@ -75,6 +76,7 @@ export function extractArgs(inputArgs: string[]) {
     requestedToListEmittedFiles,
     signalEmittedFiles,
     silent,
+    buildMode,
     compiler,
     args,
   };
