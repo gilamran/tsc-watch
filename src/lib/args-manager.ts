@@ -48,6 +48,8 @@ export function extractArgs(inputArgs: string[]) {
   const onFirstSuccessCommand = extractCommandWithValue(args, '--onFirstSuccess');
   const onSuccessCommand = extractCommandWithValue(args, '--onSuccess');
   const onFailureCommand = extractCommandWithValue(args, '--onFailure');
+  const onEmitCommand = extractCommandWithValue(args, '--onEmit');
+  const onEmitDebounce = Number(extractCommandWithValue(args, '--onEmitDebounce')) || 300;
   const onCompilationStarted = extractCommandWithValue(args, '--onCompilationStarted');
   const onCompilationComplete = extractCommandWithValue(args, '--onCompilationComplete');
   const maxNodeMem = extractCommandWithValue(args, '--maxNodeMem');
@@ -67,6 +69,8 @@ export function extractArgs(inputArgs: string[]) {
     onFirstSuccessCommand,
     onSuccessCommand,
     onFailureCommand,
+    onEmitCommand,
+    onEmitDebounce,
     onCompilationStarted,
     onCompilationComplete,
     maxNodeMem,

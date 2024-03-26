@@ -12,6 +12,7 @@ let firstTime = true;
 let firstSuccessKiller: (() => Promise<void>) | null = null;
 let successKiller: (() => Promise<void>) | null = null;
 let failureKiller: (() => Promise<void>) | null = null;
+let emitKiller: (() => Promise<void>) | null = null;
 let compilationStartedKiller: (() => Promise<void>) | null = null;
 let compilationCompleteKiller: (() => Promise<void>) | null = null;
 
@@ -19,6 +20,8 @@ const {
   onFirstSuccessCommand,
   onSuccessCommand,
   onFailureCommand,
+  onEmitCommand,
+  onEmitDebounce,
   onCompilationStarted,
   onCompilationComplete,
   maxNodeMem,
@@ -53,6 +56,11 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
     failureKiller = null;
   }
 
+  if (emitKiller) {
+    promisesToWaitFor.push(emitKiller());
+    emitKiller = null;
+  }
+
   if (compilationStartedKiller)   {
     promisesToWaitFor.push(compilationStartedKiller());
     compilationStartedKiller = null;
@@ -69,6 +77,14 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
   });
 
   return runningKillProcessesPromise;
+}
+
+function debounce<T extends (...args: Parameters<T>) => void>(this: ThisParameterType<T>, fn: T, delay = 300) {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  return (...args: Parameters<T>) => {
+    timer && clearTimeout(timer)
+    timer = setTimeout(() => fn.apply(this, args), delay)
+  }
 }
 
 function runOnCompilationStarted(): void {
@@ -99,6 +115,14 @@ function runOnSuccessCommand(): void {
   if (onSuccessCommand) {
     successKiller = run(onSuccessCommand);
   }
+}
+
+const debouncedEmit = onEmitCommand
+  ? debounce(() => { emitKiller = run(onEmitCommand) }, onEmitDebounce)
+  : undefined;
+
+function runOnEmitCommand(): void {
+  debouncedEmit?.();
 }
 
 function getTscPath(): string {
@@ -172,11 +196,18 @@ rl.on('line', function (input) {
 
   if (state.fileEmitted !== null) {
     Signal.emitFile(state.fileEmitted);
+    if (onEmitCommand) {
+      killProcesses(++compilationId, false).then((previousCompilationId) => {
+        previousCompilationId === compilationId && runOnEmitCommand();
+      });
+    }
   }
 
   if (compilationStarted) {
-    compilationId++;
-    killProcesses(compilationId, false).then((previousCompilationId) => {
+    (onCompilationStarted
+      ? killProcesses(++compilationId, false)
+      : Promise.resolve(compilationId)
+    ).then((previousCompilationId) => {
       if (previousCompilationId !== compilationId) {
         return;
       }
@@ -186,8 +217,15 @@ rl.on('line', function (input) {
   }
   
   if (compilationComplete) {
-    compilationId++;
-    killProcesses(compilationId, false).then((previousCompilationId) => {
+    const willRunCommand =
+      (firstTime && (onFirstSuccessCommand || onEmitCommand)) ||
+      onCompilationComplete ||
+      onFailureCommand ||
+      onSuccessCommand;
+    (willRunCommand
+      ? killProcesses(++compilationId, false)
+      : Promise.resolve(compilationId)
+    ).then((previousCompilationId) => {
       if (previousCompilationId !== compilationId) {
         return;
       }
@@ -201,6 +239,7 @@ rl.on('line', function (input) {
           firstTime = false;
           Signal.emitFirstSuccess();
           runOnFirstSuccessCommand();
+          runOnEmitCommand();
         }
 
         Signal.emitSuccess();
@@ -240,6 +279,12 @@ if (typeof process.on === 'function') {
       case 'run-on-success-command':
         if (successKiller) {
           successKiller().then(runOnSuccessCommand);
+        }
+        break;
+
+      case 'run-on-emit-command':
+        if (emitKiller) {
+          emitKiller().then(runOnEmitCommand);
         }
         break;
 
