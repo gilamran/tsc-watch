@@ -87,6 +87,22 @@ describe('Args Manager', () => {
     ).toBe('COMMAND_TO_RUN');
   });
 
+  it('Should return the onEmit', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onEmitCommand).toBe(null);
+    expect(
+      extractArgs(['node', 'tsc-watch.js', '--onEmit', 'COMMAND_TO_RUN', '1.ts'])
+        .onEmitCommand,
+    ).toBe('COMMAND_TO_RUN');
+  });
+
+  it('Should return the onEmitDebounceMs', () => {
+    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onEmitDebounceMs).toBe(300);
+    expect(
+      extractArgs(['node', 'tsc-watch.js', '--onEmitDebounceMs', '200', '1.ts'])
+        .onEmitDebounceMs,
+    ).toBe(200);
+  });
+
   it('Should return the onCompilationComplete', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).onCompilationComplete).toBe(null);
     expect(

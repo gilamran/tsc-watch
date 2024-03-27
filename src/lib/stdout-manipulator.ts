@@ -22,6 +22,8 @@ const newAdditionToSyntax = [
   ' --onSuccess COMMAND                                Executes `COMMAND` on **every successful** compilation.',
   ' --onFirstSuccess COMMAND                           Executes `COMMAND` on the **first successful** compilation.',
   ' --onFailure COMMAND                                Executes `COMMAND` on **every failed** compilation.',
+  ' --onEmit COMMAND                                   Executes debounced `COMMAND` on **every emitted file**.',
+  ' --onEmitDebounceMs DELAY                           Delay by which to debounce `--onEmit`.',
   ' --onCompilationStarted COMMAND                     Executes `COMMAND` on **every compilation start** event.',
   ' --onCompilationComplete COMMAND                    Executes `COMMAND` on **every successful or failed** compilation.',
   ' --noColors                                         Removes the red/green colors from the compiler output',
