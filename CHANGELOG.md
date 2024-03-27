@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.0.5 - 27/03/2024
+- fix: error TS6369: Option '--build' must be the first command line argument. thanks to @llllvvuu
+
 ## v6.0.4 - 29/04/2023
 - Automate CRLF to LF conversion 
 
