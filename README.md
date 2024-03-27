@@ -123,6 +123,6 @@ Notes:
 - The (`onEmit`) `COMMAND` will not run if the compilation succeeded with no changed files, unless it is the first success.
 - The (`onEmit`) `COMMAND` will run if the compilation failed, but still emitted changed files.
 - The (`onEmit`) `COMMAND` will not run 100 times for 100 files, due to `--onEmitDebounce`
-- The (`onEmit`) `COMMAND` will not cancel the `onSuccess`/`onFirstSuccess`/`onFailure`/`onCompilationComplete`/`onCompilationStarted` commands and vice versa.
+- The (`onEmit`) `COMMAND` is not cancelling the `onSuccess`/`onFirstSuccess`/`onFailure`/`onCompilationComplete`/`onCompilationStarted` commands and vice versa.
 - `tsc-watch` is using the currently installed TypeScript compiler.
 - `tsc-watch` is not changing the compiler, just adds the new arguments, compilation is the same, and all other arguments are the same.
