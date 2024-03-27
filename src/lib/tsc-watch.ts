@@ -4,6 +4,7 @@ import nodeCleanup, { uninstall } from 'node-cleanup';
 import spawn from 'cross-spawn';
 import { run } from './runner';
 import { extractArgs } from './args-manager';
+import { debounce } from './debounce';
 import { manipulate, detectState, deleteClear, print } from './stdout-manipulator';
 import { createInterface } from 'readline';
 import { ChildProcess } from 'child_process';
@@ -12,6 +13,7 @@ let firstTime = true;
 let firstSuccessKiller: (() => Promise<void>) | null = null;
 let successKiller: (() => Promise<void>) | null = null;
 let failureKiller: (() => Promise<void>) | null = null;
+let emitKiller: (() => Promise<void>) | null = null;
 let compilationStartedKiller: (() => Promise<void>) | null = null;
 let compilationCompleteKiller: (() => Promise<void>) | null = null;
 
@@ -19,6 +21,8 @@ const {
   onFirstSuccessCommand,
   onSuccessCommand,
   onFailureCommand,
+  onEmitCommand,
+  onEmitDebounceMs,
   onCompilationStarted,
   onCompilationComplete,
   maxNodeMem,
@@ -71,6 +75,27 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
   return runningKillProcessesPromise;
 }
 
+let runningKillEmitProcessesPromise: Promise<number> | null = null;
+// The same as `killProcesses`, but we separate it to avoid canceling each other
+function killEmitProcesses(currentEmitId: number): Promise<number> {
+  if (runningKillEmitProcessesPromise) {
+    return runningKillEmitProcessesPromise.then(() => currentEmitId);
+  }
+
+  let emitKilled = Promise.resolve();
+  if (emitKiller) {
+    emitKilled = emitKiller();
+    emitKiller = null;
+  }
+
+  runningKillEmitProcessesPromise = emitKilled.then(() => {
+    runningKillEmitProcessesPromise = null;
+    return currentEmitId;
+  });
+
+  return runningKillEmitProcessesPromise;
+}
+
 function runOnCompilationStarted(): void {
   if (onCompilationStarted) {
     compilationStartedKiller = run(onCompilationStarted);
@@ -99,6 +124,14 @@ function runOnSuccessCommand(): void {
   if (onSuccessCommand) {
     successKiller = run(onSuccessCommand);
   }
+}
+
+const debouncedEmit = onEmitCommand
+  ? debounce(() => { emitKiller = run(onEmitCommand) }, onEmitDebounceMs)
+  : undefined;
+
+function runOnEmitCommand(): void {
+  debouncedEmit?.();
 }
 
 function getTscPath(): string {
@@ -152,6 +185,14 @@ tscProcess.stderr.pipe(process.stderr);
 const rl = createInterface({ input: tscProcess.stdout });
 
 let compilationId = 0;
+let emitId = 0;
+
+function triggerOnEmit() {
+  if (onEmitCommand) {
+    killEmitProcesses(++emitId).then((previousEmitId) => previousEmitId === emitId && runOnEmitCommand());
+  }
+}
+
 rl.on('line', function (input) {
   if (noClear) {
     input = deleteClear(input);
@@ -171,6 +212,7 @@ rl.on('line', function (input) {
 
   if (state.fileEmitted !== null) {
     Signal.emitFile(state.fileEmitted);
+    triggerOnEmit();
   }
 
   if (compilationStarted) {
@@ -200,6 +242,7 @@ rl.on('line', function (input) {
           firstTime = false;
           Signal.emitFirstSuccess();
           runOnFirstSuccessCommand();
+          triggerOnEmit();
         }
 
         Signal.emitSuccess();
@@ -239,6 +282,12 @@ if (typeof process.on === 'function') {
       case 'run-on-success-command':
         if (successKiller) {
           successKiller().then(runOnSuccessCommand);
+        }
+        break;
+
+      case 'run-on-emit-command':
+        if (emitKiller) {
+          emitKiller().then(runOnEmitCommand);
         }
         break;
 

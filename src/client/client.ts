@@ -58,6 +58,12 @@ export class TscWatchClient extends EventEmitter {
       this.tsc.send('run-on-success-command');
     }
   }
+
+  runOnEmitCommand() {
+    if (this.tsc) {
+      this.tsc.send('run-on-emit-command');
+    }
+  }
 }
 
 function deserializeTscMessage(strMsg: string): [string, string?] {
