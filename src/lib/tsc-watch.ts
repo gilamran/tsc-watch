@@ -57,11 +57,6 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
     failureKiller = null;
   }
 
-  if (emitKiller) {
-    promisesToWaitFor.push(emitKiller());
-    emitKiller = null;
-  }
-
   if (compilationStartedKiller)   {
     promisesToWaitFor.push(compilationStartedKiller());
     compilationStartedKiller = null;
@@ -78,6 +73,27 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
   });
 
   return runningKillProcessesPromise;
+}
+
+let runningKillEmitProcessesPromise: Promise<number> | null = null;
+function killEmitProcesses(currentEmitId: number): Promise<number> {
+  if (runningKillEmitProcessesPromise) {
+    return runningKillEmitProcessesPromise.then(() => currentEmitId);
+  }
+
+  const promisesToWaitFor: Promise<any>[] = [];
+
+  if (emitKiller) {
+    promisesToWaitFor.push(emitKiller());
+    emitKiller = null;
+  }
+
+  runningKillEmitProcessesPromise = Promise.all(promisesToWaitFor).then(() => {
+    runningKillEmitProcessesPromise = null;
+    return currentEmitId;
+  });
+
+  return runningKillEmitProcessesPromise;
 }
 
 function runOnCompilationStarted(): void {
@@ -170,6 +186,14 @@ tscProcess.stderr.pipe(process.stderr);
 const rl = createInterface({ input: tscProcess.stdout });
 
 let compilationId = 0;
+let emitId = 0;
+
+function triggerOnEmit() {
+  if (onEmitCommand) {
+    killEmitProcesses(++emitId).then((previousEmitId) => previousEmitId === emitId && runOnEmitCommand());
+  }
+}
+
 rl.on('line', function (input) {
   if (noClear) {
     input = deleteClear(input);
@@ -189,18 +213,12 @@ rl.on('line', function (input) {
 
   if (state.fileEmitted !== null) {
     Signal.emitFile(state.fileEmitted);
-    if (onEmitCommand) {
-      killProcesses(++compilationId, false).then((previousCompilationId) => {
-        previousCompilationId === compilationId && runOnEmitCommand();
-      });
-    }
+    triggerOnEmit();
   }
 
   if (compilationStarted) {
-    (onCompilationStarted
-      ? killProcesses(++compilationId, false)
-      : Promise.resolve(compilationId)
-    ).then((previousCompilationId) => {
+    compilationId++;
+    killProcesses(compilationId, false).then((previousCompilationId) => {
       if (previousCompilationId !== compilationId) {
         return;
       }
@@ -210,15 +228,8 @@ rl.on('line', function (input) {
   }
   
   if (compilationComplete) {
-    const willRunCommand =
-      (firstTime && (onFirstSuccessCommand || onEmitCommand)) ||
-      onCompilationComplete ||
-      onFailureCommand ||
-      onSuccessCommand;
-    (willRunCommand
-      ? killProcesses(++compilationId, false)
-      : Promise.resolve(compilationId)
-    ).then((previousCompilationId) => {
+    compilationId++;
+    killProcesses(compilationId, false).then((previousCompilationId) => {
       if (previousCompilationId !== compilationId) {
         return;
       }
@@ -232,7 +243,7 @@ rl.on('line', function (input) {
           firstTime = false;
           Signal.emitFirstSuccess();
           runOnFirstSuccessCommand();
-          runOnEmitCommand();
+          triggerOnEmit();
         }
 
         Signal.emitSuccess();
