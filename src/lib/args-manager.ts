@@ -62,6 +62,14 @@ export function extractArgs(inputArgs: string[]) {
   } else {
     compiler = require.resolve(compiler, { paths: [process.cwd()] });
   }
+  if (signalEmittedFiles || requestedToListEmittedFiles) {
+    if (args[0] === '--build' || args[0] === '-b') {
+      // TS6369: Option '--build' must be the first command line argument.
+      args.splice(1, 0, '--listEmittedFiles');
+    } else {
+      args.unshift('--listEmittedFiles');
+    }
+  }
 
   return {
     onFirstSuccessCommand,

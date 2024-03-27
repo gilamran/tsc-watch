@@ -125,7 +125,6 @@ function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles 
   const nodeArgs = [
     ...((maxNodeMem) ? [`--max_old_space_size=${maxNodeMem}`] : []),
     tscBin,
-    ...((signalEmittedFiles || requestedToListEmittedFiles) ? ['--listEmittedFiles'] : []),
     ...args
   ];
 
