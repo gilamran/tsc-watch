@@ -76,19 +76,19 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
 }
 
 let runningKillEmitProcessesPromise: Promise<number> | null = null;
+// The same as `killProcesses`, but we separate it to avoid canceling each other
 function killEmitProcesses(currentEmitId: number): Promise<number> {
   if (runningKillEmitProcessesPromise) {
     return runningKillEmitProcessesPromise.then(() => currentEmitId);
   }
 
-  const promisesToWaitFor: Promise<any>[] = [];
-
+  let emitKilled = Promise.resolve();
   if (emitKiller) {
-    promisesToWaitFor.push(emitKiller());
+    emitKilled = emitKiller();
     emitKiller = null;
   }
 
-  runningKillEmitProcessesPromise = Promise.all(promisesToWaitFor).then(() => {
+  runningKillEmitProcessesPromise = emitKilled.then(() => {
     runningKillEmitProcessesPromise = null;
     return currentEmitId;
   });
