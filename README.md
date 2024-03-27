@@ -11,7 +11,7 @@
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--onSuccess COMMAND`             | Executes `COMMAND` on **every successful** compilation.                                                                                             |
 | `--onFirstSuccess COMMAND`        | Executes `COMMAND` on the **first successful** compilation.                                                                                         |
-| `--onEmit COMMAND`                | Executes debounced `COMMAND` on **every emitted file**, ignoring unchanged files and disregards compilation success or failure.                |
+| `--onEmit COMMAND`                | Executes debounced `COMMAND` on **every emitted file**, ignoring unchanged files and disregards compilation success or failure.                     |
 | `--onEmitDebounceMs DELAY`        | Delay by which to debounce `--onEmit` (default: 300).                                                                                               |
 | `--onFailure COMMAND`             | Executes `COMMAND` on **every failed** compilation.                                                                                                 |
 | `--onCompilationStarted COMMAND`  | Executes `COMMAND` on **every compilation start** event (initial and incremental).                                                                  |
