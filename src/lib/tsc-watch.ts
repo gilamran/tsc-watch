@@ -4,6 +4,7 @@ import nodeCleanup, { uninstall } from 'node-cleanup';
 import spawn from 'cross-spawn';
 import { run } from './runner';
 import { extractArgs } from './args-manager';
+import { debounce } from './debounce';
 import { manipulate, detectState, deleteClear, print } from './stdout-manipulator';
 import { createInterface } from 'readline';
 import { ChildProcess } from 'child_process';
@@ -21,7 +22,7 @@ const {
   onSuccessCommand,
   onFailureCommand,
   onEmitCommand,
-  onEmitDebounce,
+  onEmitDebounceMs,
   onCompilationStarted,
   onCompilationComplete,
   maxNodeMem,
@@ -79,14 +80,6 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
   return runningKillProcessesPromise;
 }
 
-function debounce<T extends (...args: Parameters<T>) => void>(this: ThisParameterType<T>, fn: T, delay = 300) {
-  let timer: ReturnType<typeof setTimeout> | undefined
-  return (...args: Parameters<T>) => {
-    timer && clearTimeout(timer)
-    timer = setTimeout(() => fn.apply(this, args), delay)
-  }
-}
-
 function runOnCompilationStarted(): void {
   if (onCompilationStarted) {
     compilationStartedKiller = run(onCompilationStarted);
@@ -118,7 +111,7 @@ function runOnSuccessCommand(): void {
 }
 
 const debouncedEmit = onEmitCommand
-  ? debounce(() => { emitKiller = run(onEmitCommand) }, onEmitDebounce)
+  ? debounce(() => { emitKiller = run(onEmitCommand) }, onEmitDebounceMs)
   : undefined;
 
 function runOnEmitCommand(): void {

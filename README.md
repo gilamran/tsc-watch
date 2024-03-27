@@ -11,6 +11,8 @@
 | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--onSuccess COMMAND`             | Executes `COMMAND` on **every successful** compilation.                                                                                             |
 | `--onFirstSuccess COMMAND`        | Executes `COMMAND` on the **first successful** compilation.                                                                                         |
+| `--onEmit COMMAND`                | Executes debounced `COMMAND` on **every emitted file**.                                                                                             |
+| `--onEmitDebounceMs COMMAND`      | Delay by which to debounce `--onEmit`.                                                                                                              |
 | `--onFailure COMMAND`             | Executes `COMMAND` on **every failed** compilation.                                                                                                 |
 | `--onCompilationStarted COMMAND`  | Executes `COMMAND` on **every compilation start** event (initial and incremental).                                                                  |
 | `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation.                                                                                   |
@@ -118,5 +120,7 @@ try {
 Notes:
 
 - The (`onSuccess`) `COMMAND` will not run if the compilation failed.
+- The (`onEmit`) `COMMAND` will not run if the compilation succeeded with no changed files, unless it is the first success.
+- The (`onEmit`) `COMMAND` will run if the compilation failed, but still emitted changed files.
 - `tsc-watch` is using the currently installed TypeScript compiler.
 - `tsc-watch` is not changing the compiler, just adds the new arguments, compilation is the same, and all other arguments are the same.
