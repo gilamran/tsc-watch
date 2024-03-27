@@ -64,6 +64,7 @@ export function extractArgs(inputArgs: string[]) {
   }
   if (signalEmittedFiles || requestedToListEmittedFiles) {
     if (args[0] === '--build' || args[0] === '-b') {
+      // TS6369: Option '--build' must be the first command line argument.
       args.splice(1, 0, '--listEmittedFiles');
     } else {
       args.unshift('--listEmittedFiles');
