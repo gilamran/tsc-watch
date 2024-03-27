@@ -43,6 +43,19 @@ describe('Args Manager', () => {
     expect(args.indexOf('--watch')).toBe(3);
   });
 
+  it('Should not insert args before --build (TS6369)', () => {
+    const { args } = extractArgs([
+      'node',
+      'tsc-watch.js',
+      '--signalEmittedFiles',
+      '--build',
+      '1.tsconfig.conf',
+      '2.tsconfig.conf',
+    ]);
+    expect(args.indexOf('--build')).toBe(0);
+    expect(args.indexOf('--listEmittedFiles')).toBe(1);
+  })
+
   it('Should not re-add watch', () => {
     expect(
       extractArgs(['node', 'tsc-watch.js', '-w', '1.ts']).args.indexOf('-w'),
@@ -118,11 +131,13 @@ describe('Args Manager', () => {
   it('Should return the signalEmittedFiles', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).signalEmittedFiles).toBe(false);
     expect(extractArgs(['node', 'tsc-watch.js', '--signalEmittedFiles', '1.ts']).signalEmittedFiles).toBe(true);
+    expect(extractArgs(['node', 'tsc-watch.js', '--signalEmittedFiles', '1.ts']).args.includes('--listEmittedFiles')).toBe(true);
   });
 
   it('Should return requestedToListEmittedFiles when tsc native listEmittedFiles is set', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).requestedToListEmittedFiles).toBe(false);
     expect(extractArgs(['node', 'tsc-watch.js', '--listEmittedFiles', '1.ts']).requestedToListEmittedFiles).toBe(true);
+    expect(extractArgs(['node', 'tsc-watch.js', '--listEmittedFiles', '1.ts']).args.includes('--listEmittedFiles')).toBe(true);
   });
 
   it('Should return the compiler', () => {

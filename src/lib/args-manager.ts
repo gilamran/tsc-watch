@@ -56,12 +56,18 @@ export function extractArgs(inputArgs: string[]) {
   const silent = extractCommand(args, '--silent');
   const signalEmittedFiles = extractCommand(args, '--signalEmittedFiles');
   const requestedToListEmittedFiles = extractCommand(args, '--listEmittedFiles');
-  const buildMode = extractCommand(args, '--build') || extractCommand(args, '--b');
   let compiler = extractCommandWithValue(args, '--compiler');
   if (!compiler) {
     compiler = 'typescript/bin/tsc';
   } else {
     compiler = require.resolve(compiler, { paths: [process.cwd()] });
+  }
+  if (signalEmittedFiles || requestedToListEmittedFiles) {
+    if (args[0] === '--build' || args[0] === '-b') {
+      args.splice(1, 0, '--listEmittedFiles');
+    } else {
+      args.unshift('--listEmittedFiles');
+    }
   }
 
   return {
@@ -76,7 +82,6 @@ export function extractArgs(inputArgs: string[]) {
     requestedToListEmittedFiles,
     signalEmittedFiles,
     silent,
-    buildMode,
     compiler,
     args,
   };

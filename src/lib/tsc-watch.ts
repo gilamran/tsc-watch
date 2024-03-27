@@ -27,7 +27,6 @@ const {
   requestedToListEmittedFiles,
   signalEmittedFiles,
   silent,
-  buildMode,
   compiler,
   args,
 } = extractArgs(process.argv);
@@ -119,16 +118,13 @@ interface INodeSettings {
   maxNodeMem: string | null;
   requestedToListEmittedFiles: boolean;
   signalEmittedFiles: boolean;
-  buildMode: boolean;
 }
 
-function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles, buildMode }: INodeSettings, args: string[]): ChildProcess {
+function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }: INodeSettings, args: string[]): ChildProcess {
   const tscBin = getTscPath();
   const nodeArgs = [
     ...((maxNodeMem) ? [`--max_old_space_size=${maxNodeMem}`] : []),
     tscBin,
-    ...(buildMode ? ['--build'] : []),
-    ...((signalEmittedFiles || requestedToListEmittedFiles) ? ['--listEmittedFiles'] : []),
     ...args
   ];
 
@@ -142,7 +138,7 @@ function echoExit(code: number | null, signal: string | null) {
 }
 
 let compilationErrorSinceStart = false;
-const tscProcess = spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles, buildMode }, args);
+const tscProcess = spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }, args);
 if (!tscProcess.stdout) {
   throw new Error('Unable to read Typescript stdout');
 }
