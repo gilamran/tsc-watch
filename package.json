@@ -4,7 +4,7 @@
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "clean": "rimraf dist && rimraf tmp",
-    "prepublish": "crlf --set=LF index.js client.js dist/**/*",
+    "prepublishOnly": "npm run build && crlf --set=LF index.js client.js dist/**/*",
     "test": "npm run build && jest --verbose --runInBand",
     "build": "npm run clean && npm run build-lib && npm run build-client",
     "build-lib": "tsc -p tsconfig.json",
