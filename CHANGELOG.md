@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.2.0 - 28/03/2024
+- feature: Using prepublish. thanks to @llllvvuu
+
 ## v6.1.0 - 27/03/2024
 - feature: --noEmit. thanks to @llllvvuu
 
