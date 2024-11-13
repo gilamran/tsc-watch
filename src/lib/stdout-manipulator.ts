@@ -76,11 +76,14 @@ export function print(
 }
 
 export function deleteClear(line: string): string {
-  const buffer = Buffer.from(line);
-  if (buffer.length >= 2 && buffer[0] === 0x1b && buffer[1] === 0x63) {
-    return line.substr(2);
-  }
-  return line;
+  // '\x1bc11:40:16 - Starting compilation in watch mode...'
+  // '\x1b[2J\x1b[3J\x1b[H11:33:28 - Starting compilation in watch mode...'
+  const result = line
+    .replace(/^\x1b\[2J/, '')
+    .replace(/^\x1b\[3J/, '')
+    .replace(/^\x1b\[H/, '')
+    .replace(/^\x1bc/, '');
+  return result;
 }
 
 export function manipulate(line: string): string {
