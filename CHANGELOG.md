@@ -1,5 +1,8 @@
 # @gilamran/tsc-watch CHANGELOG
 
+## v6.2.1 - 13/11/2024
+- bug fix: Fixed new version of Typescript clear codes. thanks to @staszekj
+
 ## v6.2.0 - 28/03/2024
 - feature: Using prepublish. thanks to @llllvvuu
 
