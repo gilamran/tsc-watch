@@ -4,7 +4,7 @@ function removeRunnerArgs(args: string[]): string[] {
 
 function getCommandIdx(args: string[], command: string): number {
   const lowerCasedCommand = command.toLowerCase();
-  return args.map(arg => arg.toLowerCase()).indexOf(lowerCasedCommand);
+  return args.map((arg) => arg.toLowerCase()).indexOf(lowerCasedCommand);
 }
 
 export function isCommandExist(args: string[], command: string): boolean {
@@ -43,7 +43,9 @@ function extractCommand(args: string[], command: string): boolean {
 }
 
 export function extractArgs(inputArgs: string[]) {
-  const args = forceWatch(removeRunnerArgs(inputArgs));
+  const cleanArgs = removeRunnerArgs(inputArgs);
+  const noWatch = extractCommand(cleanArgs, '--noWatch');
+  const args = noWatch ? cleanArgs : forceWatch(cleanArgs);
 
   const onFirstSuccessCommand = extractCommandWithValue(args, '--onFirstSuccess');
   const onSuccessCommand = extractCommandWithValue(args, '--onSuccess');

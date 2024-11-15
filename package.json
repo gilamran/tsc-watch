@@ -1,6 +1,6 @@
 {
   "name": "tsc-watch",
-  "version": "6.2.1",
+  "version": "6.3.0",
   "description": "The TypeScript compiler with onSuccess command",
   "scripts": {
     "clean": "rimraf dist && rimraf tmp",

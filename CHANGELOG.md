@@ -1,4 +1,7 @@
 # @gilamran/tsc-watch CHANGELOG
+## v6.3.0 - 16/04/2018
+
+- Added `--noWatch` argument
 
 ## v6.2.1 - 13/11/2024
 - bug fix: Fixed new version of Typescript clear codes. thanks to @staszekj

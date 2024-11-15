@@ -18,6 +18,7 @@
 | `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation.                                                                                   |
 | `--maxNodeMem`                    | Calls `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory.                                           |
 | `--noColors`                      | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that.                 |
+| `--noWatch`                       | By default tsc-watch adds --watch. using this to prevent watch.                                                                                     |
 | `--noClear`                       | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that.                                           |
 | `--signalEmittedFiles`            | Will run `tsc` compiler with `--listEmittedFiles`, but hiding TSFILE lines. Use it to enable `file_emitted` event, while keeping tsc stdout silent. |
 | `--silent`                        | Do not print any messages on stdout.                                                                                                                |

@@ -18,7 +18,7 @@ const compilationStartedRegex =
   /( Starting compilation in watch mode\.\.\.| File change detected\. Starting incremental compilation\.\.\.)/;
 
 const newAdditionToSyntax = [
-  ' -w, --watch                                        Watch input files. [always on]',
+  ' -w, --watch                                        Watch input files. [on by default, use --noWatch to disable]',
   ' --onSuccess COMMAND                                Executes `COMMAND` on **every successful** compilation.',
   ' --onFirstSuccess COMMAND                           Executes `COMMAND` on the **first successful** compilation.',
   ' --onFailure COMMAND                                Executes `COMMAND` on **every failed** compilation.',
