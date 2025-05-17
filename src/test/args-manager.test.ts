@@ -57,15 +57,19 @@ describe('Args Manager', () => {
   })
 
   it('Should not re-add watch', () => {
+    const isWatchParam = (elt: string) => elt === '-w' || elt === '--watch';
     expect(
-      extractArgs(['node', 'tsc-watch.js', '-w', '1.ts']).args.indexOf('-w'),
-    ).toBeGreaterThan(-1);
+      extractArgs(['node', 'tsc-watch.js', '-w', '1.ts']).args.filter(isWatchParam).length
+    ).toBe(1);
     expect(
-      extractArgs(['node', 'tsc-watch.js', '--watch', '1.ts']).args.indexOf('--watch'),
-    ).toBeGreaterThan(-1);
+      extractArgs(['node', 'tsc-watch.js', '--watch', '1.ts']).args.filter(isWatchParam).length
+    ).toBe(1);
     expect(
-      extractArgs(['node', 'tsc-watch.js', '--watch', '1.ts']).args.indexOf('--watch'),
-    ).toBeGreaterThan(-1);
+      extractArgs(['node', 'tsc-watch.js', '--watch', '1.ts']).args.filter(isWatchParam).length
+    ).toBe(-1);
+    expect(
+      extractArgs(['node', 'tsc-watch.js', '1.ts']).args.filter(isWatchParam).length
+    ).toBe(1);
   });
 
   it('Should return the onFirstSuccessCommand', () => {
