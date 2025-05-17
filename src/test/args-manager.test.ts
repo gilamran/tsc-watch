@@ -65,9 +65,6 @@ describe('Args Manager', () => {
       extractArgs(['node', 'tsc-watch.js', '--watch', '1.ts']).args.filter(isWatchParam).length
     ).toBe(1);
     expect(
-      extractArgs(['node', 'tsc-watch.js', '--watch', '1.ts']).args.filter(isWatchParam).length
-    ).toBe(-1);
-    expect(
       extractArgs(['node', 'tsc-watch.js', '1.ts']).args.filter(isWatchParam).length
     ).toBe(1);
   });
