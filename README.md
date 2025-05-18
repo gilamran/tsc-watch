@@ -32,6 +32,8 @@ Notes:
 
 - Any child process (`COMMAND`) will be terminated before creating a new one.
 
+- To prevent the watch, use `--noWatch` or pass `--watch false` as a parameter.
+
 ## Install
 
 ```sh

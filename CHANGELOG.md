@@ -1,5 +1,9 @@
 # @gilamran/tsc-watch CHANGELOG
-## v6.3.0 - 16/04/2018
+## v6.3.1 - 18/05/2025
+
+- big fix: off-by-one error tsc-watch. thanks to @rodw for the PR
+# @gilamran/tsc-watch CHANGELOG
+## v6.3.0 - 16/04/2024
 
 - Added `--noWatch` argument
 
