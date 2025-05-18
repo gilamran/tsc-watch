@@ -8,7 +8,7 @@ function getCommandIdx(args: string[], command: string): number {
 }
 
 export function isCommandExist(args: string[], command: string): boolean {
-  return getCommandIdx(args, command) > 0;
+  return getCommandIdx(args, command) >= 0;
 }
 
 export function hasWatchCommand(args: string[]): boolean {
