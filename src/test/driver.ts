@@ -23,7 +23,7 @@ export class Driver {
   public startWatch({ failFirst, pretty }: { failFirst?: boolean; pretty?: boolean } = {}): this {
     const params = [
       '--noClear',
-      '--out',
+      '--outFile',
       OUTPUT_FILE,
       failFirst ? FAILING_FILE : PASSING_FILE,
     ];

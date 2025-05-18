@@ -39,25 +39,25 @@ describe('Client Events', () => {
   describe('Events', () => {
     it('Should emit "started" on compilation start', () => {
       watchClient.on('started', callback);
-      watchClient.start('--noClear', '--out', OUTPUT_FILE, FAILING_FILE);
+      watchClient.start('--noClear', '--outFile', OUTPUT_FILE, FAILING_FILE);
       return waitFor(() => callback.mock.calls.length > 0);
     });
 
     it('Should emit "first_success" on first success', async () => {
       watchClient.on('first_success', callback);
-      watchClient.start('--noClear', '--out', OUTPUT_FILE, PASSING_FILE);
+      watchClient.start('--noClear', '--outFile', OUTPUT_FILE, PASSING_FILE);
       return waitFor(() => callback.mock.calls.length > 0);
     });
 
     it('Should emit "success" on first success', async () => {
       watchClient.on('success', callback);
-      watchClient.start('--noClear', '--out', OUTPUT_FILE, PASSING_FILE);
+      watchClient.start('--noClear', '--outFile', OUTPUT_FILE, PASSING_FILE);
       return waitFor(() => callback.mock.calls.length > 0);
     });
 
     it('Should deserialize and emit a "file_emitted" with the emitted file path', async function () {
       watchClient.on('file_emitted', callback);
-      watchClient.start('--noClear', '--listEmittedFiles', '--out', OUTPUT_FILE, PASSING_FILE);
+      watchClient.start('--noClear', '--listEmittedFiles', '--outFile', OUTPUT_FILE, PASSING_FILE);
       return waitFor(() => {
         if (callback.mock.calls.length > 0) {
           const firstCall = callback.mock.calls[0];
@@ -69,14 +69,14 @@ describe('Client Events', () => {
 
     it('Should fire "compile_errors" on when tsc compile errors occur', async () => {
       watchClient.on('compile_errors', callback);
-      watchClient.start('--noClear', '--out', OUTPUT_FILE, FAILING_FILE);
+      watchClient.start('--noClear', '--outFile', OUTPUT_FILE, FAILING_FILE);
       return waitFor(() => callback.mock.calls.length > 0);
     });
 
     it('Should fire back "exit" event when the process is exited by a signal', async function () {
       const forkSpy = jest.spyOn(child_process, 'fork');
       watchClient.on('exit', callback);
-      watchClient.start('--noClear', '--out', OUTPUT_FILE, PASSING_FILE);
+      watchClient.start('--noClear', '--outFile', OUTPUT_FILE, PASSING_FILE);
       const tscProcess: ChildProcess = forkSpy.mock.results[0].value;
 
       // Wait tsc-watch to be started and bound before to kill process
