@@ -8,6 +8,7 @@ import { debounce } from './debounce';
 import { manipulate, detectState, deleteClear, print } from './stdout-manipulator';
 import { createInterface } from 'readline';
 import { ChildProcess } from 'child_process';
+import { sep } from 'path';
 
 let firstTime = true;
 let firstSuccessKiller: (() => Promise<void>) | null = null;
@@ -136,6 +137,21 @@ function runOnEmitCommand(): void {
 
 function getTscPath(): string {
   let tscBin: string;
+
+  // try to require local tsc
+  try {
+    const resolvePaths = [];
+    const paths = process.cwd().split(sep);
+    for (let i = 0; i < paths.length; i++) {
+      const resolvePath = [...paths.slice(0, i + 1), 'node_modules'].join(sep);
+      resolvePaths.push(resolvePath);
+    }
+    return require.resolve(compiler, { paths: resolvePaths });
+  } catch (e) {
+    console.log('require local tsc failed, try to use global tsc');
+  }
+
+  // fallback to global installed tsc
   try {
     return require.resolve(compiler);
   } catch (e: any) {
@@ -160,7 +176,6 @@ function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles 
     tscBin,
     ...args
   ];
-
   return spawn('node', nodeArgs);
 }
 
