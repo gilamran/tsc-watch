@@ -142,8 +142,8 @@ function getTscPath(): string {
   try {
     const resolvePaths = [];
     const paths = process.cwd().split(sep);
-    for (let i = 0; i < paths.length; i++) {
-      const resolvePath = [...paths.slice(0, i + 1), 'node_modules'].join(sep);
+    for (let i = paths.length; i > 0; i--) {
+      const resolvePath = [...paths.slice(0, i), 'node_modules'].join(sep);
       resolvePaths.push(resolvePath);
     }
     return require.resolve(compiler, { paths: resolvePaths });
