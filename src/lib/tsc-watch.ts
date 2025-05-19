@@ -176,6 +176,7 @@ function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles 
     tscBin,
     ...args
   ];
+
   return spawn('node', nodeArgs);
 }
 
