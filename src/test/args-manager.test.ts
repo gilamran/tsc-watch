@@ -160,6 +160,6 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).compiler).toBe('typescript/bin/tsc');
     expect(
       extractArgs(['node', 'tsc-watch.js', '--compiler', 'typescript/lib/tsc', '1.ts']).compiler,
-    ).toBe(require.resolve('typescript/lib/tsc'));
+    ).toBe('typescript/lib/tsc');
   });
 });

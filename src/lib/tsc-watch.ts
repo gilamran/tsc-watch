@@ -8,7 +8,6 @@ import { debounce } from './debounce';
 import { manipulate, detectState, deleteClear, print } from './stdout-manipulator';
 import { createInterface } from 'readline';
 import { ChildProcess } from 'child_process';
-import { sep } from 'path';
 
 let firstTime = true;
 let firstSuccessKiller: (() => Promise<void>) | null = null;
@@ -140,13 +139,7 @@ function getTscPath(): string {
 
   // try to require local tsc
   try {
-    const resolvePaths = [];
-    const paths = process.cwd().split(sep);
-    for (let i = paths.length; i > 0; i--) {
-      const resolvePath = [...paths.slice(0, i), 'node_modules'].join(sep);
-      resolvePaths.push(resolvePath);
-    }
-    return require.resolve(compiler, { paths: resolvePaths });
+    return require.resolve(compiler, { paths: [process.cwd()] });
   } catch (e) {
     console.log('require local tsc failed, try to use global tsc');
   }

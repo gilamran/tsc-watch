@@ -61,8 +61,6 @@ export function extractArgs(inputArgs: string[]) {
   let compiler = extractCommandWithValue(args, '--compiler');
   if (!compiler) {
     compiler = 'typescript/bin/tsc';
-  } else {
-    compiler = require.resolve(compiler, { paths: [process.cwd()] });
   }
   if (signalEmittedFiles || requestedToListEmittedFiles) {
     if (args[0] === '--build' || args[0] === '-b') {
