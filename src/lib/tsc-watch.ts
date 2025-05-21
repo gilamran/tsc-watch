@@ -136,6 +136,15 @@ function runOnEmitCommand(): void {
 
 function getTscPath(): string {
   let tscBin: string;
+
+  // try to require local tsc
+  try {
+    return require.resolve(compiler, { paths: [process.cwd()] });
+  } catch (e) {
+    console.log('require local tsc failed, try to use global tsc');
+  }
+
+  // fallback to global installed tsc
   try {
     return require.resolve(compiler);
   } catch (e: any) {
