@@ -22,6 +22,7 @@ export const waitFor = (action: Function, timeout = 30000) => {
   });
 };
 
+export const FIXTURES_DIR = join(process.cwd(), 'src', 'test', 'fixtures');
 export const TMP_DIR = join(process.cwd(), 'tmp');
 export const TMP_FIXTURES_DIR = join(TMP_DIR, 'fixtures');
 export const OUTPUT_FILE = join(TMP_FIXTURES_DIR, 'output.js');
@@ -29,7 +30,7 @@ export const FAILING_FILE = join(TMP_FIXTURES_DIR, 'failing.ts');
 export const PASSING_FILE = join(TMP_FIXTURES_DIR, 'passing.ts');
 
 export function copyFixtures() {
-  fsExtra.copySync(join(process.cwd(), 'src', 'test', 'fixtures'), TMP_FIXTURES_DIR);
+  fsExtra.copySync(FIXTURES_DIR, TMP_FIXTURES_DIR);
 }
 
 export function removeFixtures() {

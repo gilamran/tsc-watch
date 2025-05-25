@@ -1,3 +1,5 @@
+import { getCompilerPath } from "./compiler-provider";
+
 function removeRunnerArgs(args: string[]): string[] {
   return args.splice(2); // removing "node tsc-watch.js"
 }
@@ -60,12 +62,9 @@ export function extractArgs(inputArgs: string[]) {
   const silent = extractCommand(args, '--silent');
   const signalEmittedFiles = extractCommand(args, '--signalEmittedFiles');
   const requestedToListEmittedFiles = extractCommand(args, '--listEmittedFiles');
-  let compiler = extractCommandWithValue(args, '--compiler');
-  if (!compiler) {
-    compiler = 'typescript/bin/tsc';
-  } else {
-    compiler = require.resolve(compiler, { paths: [process.cwd()] });
-  }
+  const compiler = getCompilerPath(extractCommandWithValue(args, '--compiler'));
+
+  
   if (signalEmittedFiles || requestedToListEmittedFiles) {
     if (args[0] === '--build' || args[0] === '-b') {
       // TS6369: Option '--build' must be the first command line argument.

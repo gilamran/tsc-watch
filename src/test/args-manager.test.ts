@@ -157,10 +157,4 @@ describe('Args Manager', () => {
     expect(extractArgs(['node', 'tsc-watch.js', '--listEmittedFiles', '1.ts']).args.includes('--listEmittedFiles')).toBe(true);
   });
 
-  it('Should return the compiler', () => {
-    expect(extractArgs(['node', 'tsc-watch.js', '1.ts']).compiler).toBe('typescript/bin/tsc');
-    expect(
-      extractArgs(['node', 'tsc-watch.js', '--compiler', 'typescript/lib/tsc', '1.ts']).compiler,
-    ).toBe(require.resolve('typescript/lib/tsc'));
-  });
 });

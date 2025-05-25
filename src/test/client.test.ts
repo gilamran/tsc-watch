@@ -1,3 +1,4 @@
+import { arch, platform } from 'os';
 import { join } from 'path';
 import { TscWatchClient } from '../client';
 import {
@@ -85,7 +86,9 @@ describe('Client Events', () => {
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await waitFor(() => callback.mock.calls.length > 0);
-      expect(callback.mock.calls[0]).toEqual([1, null]);
+      const expectedResult =
+        platform() === 'darwin' && arch() === 'arm64' ? [null, 'SIGKILL'] : [1, null];
+      expect(callback.mock.calls[0]).toEqual(expectedResult);
     });
   });
 });

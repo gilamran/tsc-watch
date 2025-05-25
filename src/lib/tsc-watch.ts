@@ -134,30 +134,14 @@ function runOnEmitCommand(): void {
   debouncedEmit?.();
 }
 
-function getTscPath(): string {
-  let tscBin: string;
-  try {
-    return require.resolve(compiler);
-  } catch (e: any) {
-    if (e.code === 'MODULE_NOT_FOUND') {
-      console.error(e.message);
-      process.exit(9);
-    }
-    throw e;
-  }
-}
-
 interface INodeSettings {
   maxNodeMem: string | null;
-  requestedToListEmittedFiles: boolean;
-  signalEmittedFiles: boolean;
 }
 
-function spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }: INodeSettings, args: string[]): ChildProcess {
-  const tscBin = getTscPath();
+function spawnTsc({ maxNodeMem }: INodeSettings, args: string[]): ChildProcess {
   const nodeArgs = [
     ...((maxNodeMem) ? [`--max_old_space_size=${maxNodeMem}`] : []),
-    tscBin,
+    compiler,
     ...args
   ];
 
@@ -171,7 +155,7 @@ function echoExit(code: number | null, signal: string | null) {
 }
 
 let compilationErrorSinceStart = false;
-const tscProcess = spawnTsc({ maxNodeMem, requestedToListEmittedFiles, signalEmittedFiles }, args);
+const tscProcess = spawnTsc({ maxNodeMem }, args);
 if (!tscProcess.stdout) {
   throw new Error('Unable to read Typescript stdout');
 }

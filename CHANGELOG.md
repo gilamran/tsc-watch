@@ -1,4 +1,11 @@
 # @gilamran/tsc-watch CHANGELOG
+## v7.0.0 - 25/05/2025
+
+- feature: Globally installed `tsc-watch` will use the local compiler if it exists, otherwise it will use the global `tsc` compiler.
+- Update existing test code to pass the new version of typescript
+- Update existing test code to work in Mac OS(M1 chip)
+
+# @gilamran/tsc-watch CHANGELOG
 ## v6.3.1 - 18/05/2025
 
 - big fix: off-by-one error tsc-watch. thanks to @rodw for the PR

@@ -129,3 +129,4 @@ Notes:
 - The (`onEmit`) `COMMAND` is not cancelling the `onSuccess`/`onFirstSuccess`/`onFailure`/`onCompilationComplete`/`onCompilationStarted` commands and vice versa.
 - `tsc-watch` is using the currently installed TypeScript compiler.
 - `tsc-watch` is not changing the compiler, just adds the new arguments, compilation is the same, and all other arguments are the same.
+- if `tsc-watch` was installed globally, it will use the local compiler if it exists, otherwise it will use the global `tsc` compiler.
