@@ -12,8 +12,7 @@ const typescriptEmittedFileRegex = /(TSFILE:)\s*(.*)/;
 // errors
 const compilationCompleteWithErrorRegex =
   / Found [^0][0-9]* error[s]?\. Watching for file changes\./;
-const nativeCompilationCompleteWithErrorRegex =
-  /Found [^0]?\d* error[s]?(?: in .+?)?(?:, starting at: .+?)?\./;
+const nativeCompilationCompleteWithErrorRegex = /Found [^0]?\d* error[s]? in /;
 
 // no errors
 const compilationCompleteWithoutErrorRegex = / Found 0 errors\. Watching for file changes\./;
