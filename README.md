@@ -34,6 +34,8 @@ Notes:
 
 - To prevent the watch, use `--noWatch` or pass `--watch false` as a parameter.
 
+- tsc-watch supports tsgo (native compilation), just select the compiler path. `tsc-watch --compiler .bin/tsgo`
+
 ## Install
 
 ```sh
