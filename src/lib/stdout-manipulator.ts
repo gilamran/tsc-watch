@@ -9,13 +9,26 @@ const typescriptPrettyErrorRegex = /:\d+:\d+ \- error TS\d+: /;
 const typescriptErrorRegex = /\(\d+,\d+\): error TS\d+: /;
 const typescriptEmittedFileRegex = /(TSFILE:)\s*(.*)/;
 
+// errors
 const compilationCompleteWithErrorRegex =
   / Found [^0][0-9]* error[s]?\. Watching for file changes\./;
+const nativeCompilationCompleteWithErrorRegex =
+  /Found [^0]?\d* error[s]?(?: in .+?)?(?:, starting at: .+?)?\./;
+
+// no errors
 const compilationCompleteWithoutErrorRegex = / Found 0 errors\. Watching for file changes\./;
-const compilationCompleteRegex =
-  /( Compilation complete\. Watching for file changes\.| Found \d+ error[s]?\. Watching for file changes\.)/;
+
+// compilation started
 const compilationStartedRegex =
   /( Starting compilation in watch mode\.\.\.| File change detected\. Starting incremental compilation\.\.\.)/;
+
+const nativeCompilationStartedRegex = /build starting at /;
+
+// compilation complete
+const compilationCompleteRegex =
+  /( Compilation complete\. Watching for file changes\.| Found \d+ error[s]?\. Watching for file changes\.)/;
+
+const nativeCompilationCompleteRegex = /build finished in /;
 
 const newAdditionToSyntax = [
   ' -w, --watch                                        Watch input files. [on by default, use --noWatch to disable]',
@@ -38,6 +51,7 @@ function color(line: string, noClear: boolean = false): string {
 
   // completed with error:
   line = line.replace(compilationCompleteWithErrorRegex, (m) => `\u001B[31m${m}\u001B[39m`); // Red
+  line = line.replace(nativeCompilationCompleteWithErrorRegex, (m) => `\u001B[31m${m}\u001B[39m`); // Red
 
   // completed without error:
   line = line.replace(compilationCompleteWithoutErrorRegex, (m) => `\u001B[32m${m}\u001B[39m`); // Green
@@ -92,12 +106,17 @@ export function manipulate(line: string): string {
 
 export function detectState(line: string) {
   const clearLine = stripAnsi(line);
-  const compilationStarted = compilationStartedRegex.test(clearLine);
+  const compilationStarted =
+    compilationStartedRegex.test(clearLine) || nativeCompilationStartedRegex.test(clearLine);
+
   const compilationError =
     compilationCompleteWithErrorRegex.test(clearLine) ||
+    nativeCompilationCompleteWithErrorRegex.test(clearLine) ||
     typescriptErrorRegex.test(clearLine) ||
     typescriptPrettyErrorRegex.test(clearLine);
-  const compilationComplete = compilationCompleteRegex.test(clearLine);
+
+  const compilationComplete =
+    compilationCompleteRegex.test(clearLine) || nativeCompilationCompleteRegex.test(clearLine);
   const fileEmittedExec = typescriptEmittedFileRegex.exec(clearLine);
   const fileEmitted = fileEmittedExec !== null ? fileEmittedExec[2] : null; // if the regex is not null it will return an array with 3 elements
 
