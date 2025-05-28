@@ -1,5 +1,5 @@
 # @gilamran/tsc-watch CHANGELOG
-## v7.1.0 - 28/05/2025
+## v7.1.1 - 28/05/2025
 
 - feature: Added support for tsgo (native compilation))
 
