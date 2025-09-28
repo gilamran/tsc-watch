@@ -16,13 +16,14 @@
 | `--onFailure COMMAND`             | Executes `COMMAND` on **every failed** compilation.                                                                                                 |
 | `--onCompilationStarted COMMAND`  | Executes `COMMAND` on **every compilation start** event (initial and incremental).                                                                  |
 | `--onCompilationComplete COMMAND` | Executes `COMMAND` on **every successful or failed** compilation.                                                                                   |
-| `--maxNodeMem`                    | Calls `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory.                                           |
 | `--noColors`                      | By default tsc-watch adds colors the output with green<br>on success, and in red on failure. <br>Add this argument to prevent that.                 |
 | `--noWatch`                       | By default tsc-watch adds --watch. using this to prevent watch.                                                                                     |
 | `--noClear`                       | In watch mode the `tsc` compiler clears the screen before reporting<br>Add this argument to prevent that.                                           |
 | `--signalEmittedFiles`            | Will run `tsc` compiler with `--listEmittedFiles`, but hiding TSFILE lines. Use it to enable `file_emitted` event, while keeping tsc stdout silent. |
 | `--silent`                        | Do not print any messages on stdout.                                                                                                                |
-| `--compiler PATH`                 | The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc`                                                          |
+| `--maxNodeMem`                    | Calls `node` with a specific memory limit `max_old_space_size`, to use if your project needs more memory.                                           |
+| `--compiler PATH`                 | [Deprecated] The `PATH` will be used instead of typescript compiler.<br>Default is `typescript/bin/tsc`                                             |
+| `--compileCommand COMMAND`        | The `COMMAND` will be used to execute the typescript compiler. Replaces `--compiler PATH` and `--maxNodeMem`                                        |
 
 Notes:
 
@@ -34,7 +35,24 @@ Notes:
 
 - To prevent the watch, use `--noWatch` or pass `--watch false` as a parameter.
 
-- tsc-watch supports tsgo (native compilation), just select the compiler path. `tsc-watch --compiler .bin/tsgo`
+- tsc-watch supports tsgo (native compilation), just select the compiler path. `tsc-watch --compileCommand tsgo` or `tsc-watch --compileCommand "yarn tsgo"`
+
+### Common Usage (package.json):
+
+#### Run your server after successful project compilation
+```json
+"scripts": {
+  "dev": "tsc-watch -b ./src/tsconfig.json --onSuccess \"yarn start-dev-server\""
+}
+```
+
+#### Using tsgo (native compilation)
+```json
+"scripts": {
+  "dev": "tsc-watch --compileCommand tsgo"
+}
+```
+
 
 ## Install
 

@@ -1,4 +1,4 @@
-import { getCompilerPath } from "./compiler-provider";
+import { getCompilerPath } from './compiler-provider';
 
 function removeRunnerArgs(args: string[]): string[] {
   return args.splice(2); // removing "node tsc-watch.js"
@@ -56,15 +56,30 @@ export function extractArgs(inputArgs: string[]) {
   const onEmitDebounceMs = Number(extractCommandWithValue(args, '--onEmitDebounceMs')) || 300;
   const onCompilationStarted = extractCommandWithValue(args, '--onCompilationStarted');
   const onCompilationComplete = extractCommandWithValue(args, '--onCompilationComplete');
-  const maxNodeMem = extractCommandWithValue(args, '--maxNodeMem');
   const noColors = extractCommand(args, '--noColors');
   const noClear = extractCommand(args, '--noClear');
   const silent = extractCommand(args, '--silent');
   const signalEmittedFiles = extractCommand(args, '--signalEmittedFiles');
   const requestedToListEmittedFiles = extractCommand(args, '--listEmittedFiles');
-  const compiler = getCompilerPath(extractCommandWithValue(args, '--compiler'));
 
-  
+  const compilationRunnerArgs: string[] = [];
+  let compilationRunner: string;
+  const compileCommand = extractCommandWithValue(args, '--compileCommand');
+  if (compileCommand) {
+    const compileCommandArgs = compileCommand.split(' ');
+    compilationRunner = compileCommandArgs[0];
+    compilationRunnerArgs.push(...compileCommandArgs.slice(1));
+  } else {
+    compilationRunner = 'node';
+    const maxNodeMem = extractCommandWithValue(args, '--maxNodeMem');
+    if (maxNodeMem) {
+      compilationRunnerArgs.push(`--max_old_space_size=${maxNodeMem}`);
+    }
+
+    const compiler = getCompilerPath(extractCommandWithValue(args, '--compiler'));
+    compilationRunnerArgs.push(compiler);
+  }
+
   if (signalEmittedFiles || requestedToListEmittedFiles) {
     if (args[0] === '--build' || args[0] === '-b') {
       // TS6369: Option '--build' must be the first command line argument.
@@ -82,13 +97,13 @@ export function extractArgs(inputArgs: string[]) {
     onEmitDebounceMs,
     onCompilationStarted,
     onCompilationComplete,
-    maxNodeMem,
     noColors,
     noClear,
     requestedToListEmittedFiles,
     signalEmittedFiles,
     silent,
-    compiler,
+    compilationRunner,
+    compilationRunnerArgs,
     args,
   };
 }

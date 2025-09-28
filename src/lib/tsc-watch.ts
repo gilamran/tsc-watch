@@ -25,13 +25,13 @@ const {
   onEmitDebounceMs,
   onCompilationStarted,
   onCompilationComplete,
-  maxNodeMem,
   noColors,
   noClear,
   requestedToListEmittedFiles,
   signalEmittedFiles,
   silent,
-  compiler,
+  compilationRunner,
+  compilationRunnerArgs,
   args,
 } = extractArgs(process.argv);
 
@@ -57,7 +57,7 @@ function killProcesses(currentCompilationId: number, killAll: boolean): Promise<
     failureKiller = null;
   }
 
-  if (compilationStartedKiller)   {
+  if (compilationStartedKiller) {
     promisesToWaitFor.push(compilationStartedKiller());
     compilationStartedKiller = null;
   }
@@ -127,25 +127,13 @@ function runOnSuccessCommand(): void {
 }
 
 const debouncedEmit = onEmitCommand
-  ? debounce(() => { emitKiller = run(onEmitCommand) }, onEmitDebounceMs)
+  ? debounce(() => {
+      emitKiller = run(onEmitCommand);
+    }, onEmitDebounceMs)
   : undefined;
 
 function runOnEmitCommand(): void {
   debouncedEmit?.();
-}
-
-interface INodeSettings {
-  maxNodeMem: string | null;
-}
-
-function spawnTsc({ maxNodeMem }: INodeSettings, args: string[]): ChildProcess {
-  const nodeArgs = [
-    ...((maxNodeMem) ? [`--max_old_space_size=${maxNodeMem}`] : []),
-    compiler,
-    ...args
-  ];
-
-  return spawn('node', nodeArgs);
 }
 
 function echoExit(code: number | null, signal: string | null) {
@@ -155,7 +143,7 @@ function echoExit(code: number | null, signal: string | null) {
 }
 
 let compilationErrorSinceStart = false;
-const tscProcess = spawnTsc({ maxNodeMem }, args);
+const tscProcess = spawn(compilationRunner, [...compilationRunnerArgs, ...args]);
 if (!tscProcess.stdout) {
   throw new Error('Unable to read Typescript stdout');
 }
@@ -173,7 +161,9 @@ let emitId = 0;
 
 function triggerOnEmit() {
   if (onEmitCommand) {
-    killEmitProcesses(++emitId).then((previousEmitId) => previousEmitId === emitId && runOnEmitCommand());
+    killEmitProcesses(++emitId).then(
+      (previousEmitId) => previousEmitId === emitId && runOnEmitCommand(),
+    );
   }
 }
 
@@ -209,7 +199,7 @@ rl.on('line', function (input) {
       Signal.emitStarted();
     });
   }
-  
+
   if (compilationComplete) {
     compilationId++;
     killProcesses(compilationId, false).then((previousCompilationId) => {
