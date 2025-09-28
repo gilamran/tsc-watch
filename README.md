@@ -35,7 +35,7 @@ Notes:
 
 - To prevent the watch, use `--noWatch` or pass `--watch false` as a parameter.
 
-- tsc-watch supports tsgo (native compilation), just select the compiler path. `tsc-watch --compileCommand tsgo` or `tsc-watch --compileCommand "yarn tsgo"`
+- tsc-watch supports tsgo (native compilation), by providing the compile command. `tsc-watch --compileCommand tsgo` or `tsc-watch --compileCommand "yarn tsgo"`
 
 ### Common Usage (package.json):
 
