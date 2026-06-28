@@ -1,4 +1,11 @@
 # @gilamran/tsc-watch CHANGELOG
+## v7.2.1 - 28/06/2026
+- support for node Typescript 7+
+- fix: Fixed issue with `--maxNodeMem` argument.
+- fix: Fixed issue with killing the process on SIGTERM signal.
+- fix: Fixed failing test
+
+# @gilamran/tsc-watch CHANGELOG
 ## v7.2.0 - 29/09/2025
 
 - feature: Fixed support for tsgo (native compilation) using `--compileCommand` argument.
