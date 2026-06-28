@@ -287,7 +287,7 @@ const Signal = {
 
 nodeCleanup((_exitCode: number | null, signal: string | null) => {
   if (signal) {
-    tscProcess.kill(signal);
+    tscProcess.kill(signal as NodeJS.Signals);
   }
   killProcesses(0, true).then(() => process.exit());
   // don't call cleanup handler again
