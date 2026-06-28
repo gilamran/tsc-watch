@@ -65,13 +65,15 @@ export function extractArgs(inputArgs: string[]) {
   const compilationRunnerArgs: string[] = [];
   let compilationRunner: string;
   const compileCommand = extractCommandWithValue(args, '--compileCommand');
+
+  let maxNodeMem: string | null = null;
   if (compileCommand) {
     const compileCommandArgs = compileCommand.split(' ');
     compilationRunner = compileCommandArgs[0];
     compilationRunnerArgs.push(...compileCommandArgs.slice(1));
   } else {
     compilationRunner = 'node';
-    const maxNodeMem = extractCommandWithValue(args, '--maxNodeMem');
+    maxNodeMem = extractCommandWithValue(args, '--maxNodeMem');
     if (maxNodeMem) {
       compilationRunnerArgs.push(`--max_old_space_size=${maxNodeMem}`);
     }
@@ -104,6 +106,7 @@ export function extractArgs(inputArgs: string[]) {
     silent,
     compilationRunner,
     compilationRunnerArgs,
+    maxNodeMem,
     args,
   };
 }
