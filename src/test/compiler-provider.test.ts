@@ -1,3 +1,4 @@
+import path from 'path';
 import { getCompilerPath } from '../lib/compiler-provider';
 
 describe('Compiler Provider', () => {
@@ -30,8 +31,49 @@ describe('Compiler Provider', () => {
       return 'GLOBAL_TYPESCRIPT_COMPILER_PATH';
     });
 
-    
     const compilerPath = getCompilerPath(null, resolver);
     expect(compilerPath).toBe('GLOBAL_TYPESCRIPT_COMPILER_PATH');
+  });
+
+  it('Should resolve compiler when subpath is not exported (TypeScript 7+)', () => {
+    const resolver: any = jest.fn().mockImplementation((id: string, options?: { paths?: string[] }) => {
+      if (id === 'typescript/bin/tsc') {
+        const err: NodeJS.ErrnoException = new Error('not exported');
+        err.code = 'ERR_PACKAGE_PATH_NOT_EXPORTED';
+        throw err;
+      }
+      if (id === 'typescript/package.json') {
+        return options?.paths
+          ? '/local/typescript/package.json'
+          : '/global/typescript/package.json';
+      }
+      throw new Error(`unexpected resolve: ${id}`);
+    });
+
+    const compilerPath = getCompilerPath(null, resolver);
+    expect(compilerPath).toBe(path.join('/local/typescript', 'bin', 'tsc'));
+    expect(resolver).toHaveBeenCalledWith('typescript/package.json', { paths: [process.cwd()] });
+  });
+
+  it('Should resolve global compiler when subpath is not exported and local package is missing', () => {
+    const resolver: any = jest.fn().mockImplementation((id: string, options?: { paths?: string[] }) => {
+      if (id === 'typescript/bin/tsc') {
+        const err: NodeJS.ErrnoException = new Error('not exported');
+        err.code = 'ERR_PACKAGE_PATH_NOT_EXPORTED';
+        throw err;
+      }
+      if (id === 'typescript/package.json' && options?.paths) {
+        const err: NodeJS.ErrnoException = new Error('not found');
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+      if (id === 'typescript/package.json') {
+        return '/global/typescript/package.json';
+      }
+      throw new Error(`unexpected resolve: ${id}`);
+    });
+
+    const compilerPath = getCompilerPath(null, resolver);
+    expect(compilerPath).toBe(path.join('/global/typescript', 'bin', 'tsc'));
   });
 });
